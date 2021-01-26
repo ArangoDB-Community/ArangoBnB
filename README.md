@@ -1,5 +1,5 @@
 # ArangoBnB
-This web app is being created to showcase the GeoView functionality of ArangoSearch and to provide an example of ArangoDB being used in a JavaScript stack.
+This web app is being created to showcase the GeoJSON functionality of ArangoSearch and to provide an example of ArangoDB being used in a JavaScript stack.
 
 To get started:
 * Say hello in the [GitHub Discussions](https://github.com/cw00dw0rd/ArangoBnB/discussions)
