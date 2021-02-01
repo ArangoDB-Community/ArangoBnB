@@ -3,8 +3,10 @@ This web app is being created to showcase the GeoJSON functionality of ArangoSea
 
 To get started:
 * Say hello in the [GitHub Discussions](https://github.com/cw00dw0rd/ArangoBnB/discussions)
-* [Vote on the framework to use](https://github.com/cw00dw0rd/ArangoBnB/discussions/3)
-* Check out the project todos on the [Project board](https://github.com/cw00dw0rd/ArangoBnB/projects/1) (pending the framework vote)
+* Check out the project todos:
+  * [Primary Project board (Vue frontend & Backend tasks)](https://github.com/cw00dw0rd/ArangoBnB/projects/1)
+  * [React Project board](https://github.com/users/cw00dw0rd/projects/1)(thanks [@couds](https://github.com/couds) and [@lostpebble](https://github.com/lostpebble) for leading the react version.)
+
 
 Some goals for the project include:
 * Search an AirBnB dataset to find rentals nearby a specified location
@@ -16,25 +18,4 @@ Some goals for the project include:
 We would enjoy having anyone from the community participate in the project development! 
 If you have any suggestions or features that you would like to be added start a discussion or open an issue.
 
-## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
