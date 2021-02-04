@@ -1,11 +1,11 @@
 {
   "name": "arangobnb-tutorial",
-  "workspaces": [
-    "workspaces/backend",
-    "workspaces/frontend-react",
-    "workspaces/frontend-vue"
-  ],
+  "private": true,
   "scripts": {
+    "install": "npm run install-vue && npm run install-react",
+    "install-backend": "cd ./workspaces/backend && npm install",
+    "install-vue": "cd ./workspaces/frontend-vue && npm install --legacy-peer-deps",
+    "install-react": "cd ./workspaces/frontend-react && npm install --legacy-peer-deps",
     "serve": "cd ./workspaces/frontend-vue && npm run serve",
     "serve-react": "cd ./workspaces/frontend-react && npm run start",
     "build": "cd ./workspaces/frontend-vue && npm run build",
