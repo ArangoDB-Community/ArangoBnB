@@ -1,0 +1,32 @@
+@import "variables.scss";
+
+.home {
+  background: url(/assets/images/bg.png);
+  .header {
+    background-color: rgba(0,0,0,.4);
+    padding: 1rem;
+    .logo {
+      display: flex;
+      align-items: flex-end;
+      color: white;
+      font-size: 2rem;
+      line-height: 2rem;
+      img {
+        max-width: 4rem;
+        max-height: 4rem;
+      }
+    }
+  }
+  .search-form {
+    width: 90%;
+    background-color: rgba(0,0,0,.4);
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .search {
+    align-self: flex-end;
+    width: 15rem
+  }
+}
