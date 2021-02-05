@@ -20,13 +20,18 @@ If you have any suggestions or features that you would like to be added start a 
 
 # Contributing 
 
-This project uses NPM workspaces, **which requires npm 7**.
 Each frontend maintains its own package.json for dependencies. 
+The root package.json handles the installation of packages for whichever package you choose to install.
+Running `npm install` will install both sets of packages for Vue and React. 
+
+If you would like to only install the individual packages append the framework name. ie: `npm install-vue`
 
 ## Vue Project setup
 From the project root directory run:
 ```
 npm install
+or
+npm install-vue
 ```
 
 ### Vue Compiles and hot-reloads for development
