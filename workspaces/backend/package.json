@@ -1,10 +1,20 @@
 {
   "name": "arangobnb-tutorial-backend",
   "private": true,
+  "scripts": {
+    "dev": "nodemon src/server_start.js",
+    "start": "node src/server_start.js"
+  },
   "dependencies": {
     "koa": "^2.13.1",
     "koa-router": "^10.0.0",
     "koa-body": "^4.2.0",
     "arangojs": "^7.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7",
+    "@babel/core": "^7.12.13",
+    "@babel/register": "^7.12.13",
+    "@babel/preset-env": "^7.12.13"
   }
 }
