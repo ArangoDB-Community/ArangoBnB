@@ -5,7 +5,7 @@ To get started:
 * Say hello in the [GitHub Discussions](https://github.com/cw00dw0rd/ArangoBnB/discussions)
 * Check out the project todos:
   * [Primary Project board (Vue frontend & Backend tasks)](https://github.com/cw00dw0rd/ArangoBnB/projects/1)
-  * [React Project board](https://github.com/users/cw00dw0rd/projects/1), make PR's against react branch (thanks [@couds](https://github.com/couds) and [@lostpebble](https://github.com/lostpebble) for leading the react version.)
+  * [React Project board](https://github.com/users/cw00dw0rd/projects/1), (thanks [@couds](https://github.com/couds) and [@lostpebble](https://github.com/lostpebble) for leading the react version.)
 * The dataset we are currently working with can be downloaded from [Kaggle](https://www.kaggle.com/brittabettendorf/berlin-airbnb-data?select=listings_summary.csv). This will need some modeling changes to take advantage of ArangoDB features so keep an eye out for changes to that task [#16](https://github.com/cw00dw0rd/ArangoBnB/issues/16). We will update this bullet once we have landed on the final dataset.
 
 Some goals for the project include:
@@ -18,25 +18,49 @@ Some goals for the project include:
 We would enjoy having anyone from the community participate in the project development! 
 If you have any suggestions or features that you would like to be added start a discussion or open an issue.
 
-## Project setup
+# Contributing 
+
+Each frontend maintains its own package.json for dependencies. 
+The root package.json handles the installation of packages for whichever package you choose to install.
+Running `npm install` will install both sets of packages for Vue and React. 
+
+If you would like to only install the individual packages append the framework name. ie: `npm install-vue`
+
+## Vue Project setup
+From the project root directory run:
 ```
 npm install
+or
+npm install-vue
 ```
 
-### Compiles and hot-reloads for development
+### Vue Compiles and hot-reloads for development
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Vue Compiles and minifies for production
 ```
 npm run build
 ```
 
-### Lints and fixes files
+### Vue Lints and fixes files
 ```
 npm run lint
 ```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## React Project Setup
+From the project root directory run:
+```
+npm install
+or
+npm install-react
+```
+
+### Serve the react fronted
+```
+npm run serve-react
+```
