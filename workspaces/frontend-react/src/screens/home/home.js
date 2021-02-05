@@ -3,9 +3,10 @@ import { Button, Card, Columns, Form, Hero } from 'react-bulma-components';
 import * as api from 'services/api';
 import logo from 'assets/images/logo.webp';
 import './home.scss'
+import { DatePicker } from './components/date-picker';
 
 const Home = () => {
-  const [form, setForm] = useState({ destination: '', dateStart: '', dateEnd: '', travelers: '' });
+  const [form, setForm] = useState({ destination: '', dateStart: undefined, dateEnd: undefined, travelers: '' });
 
   const onChange = (evt) => {
     setForm(state => ({
@@ -33,16 +34,16 @@ const Home = () => {
         <Card renderAs="form" onSubmit={onSubmit} className="search-form">
           <Columns breakpoint="mobile">
             <Columns.Column desktop={{ size: 4 }} tablet={{ size: 12 }} mobile={{ size: 12 }}>
-              <Form.Input onChange={onChange} value={form.destination} name="destination" placeholder="I want to go to" />
+              <Form.Input autoComplete="off" autoCapitalize="off" onChange={onChange} value={form.destination} name="destination" placeholder="I want to go to" />
             </Columns.Column>
             <Columns.Column desktop={{ size: 2 }} tablet={{ size: 6 }} mobile={{ size: 12 }}>
-              <Form.Input onChange={onChange} value={form.dateStart} name="dateStart" placeholder="from this date" />
+              <DatePicker onChange={onChange} value={form.dateStart} name="dateStart" placeholder="from this date" />
             </Columns.Column>
             <Columns.Column desktop={{ size: 2 }} tablet={{ size: 6 }} mobile={{ size: 12 }}>
-              <Form.Input onChange={onChange} value={form.dateEnd} name="dateEnd" placeholder="to this dates" />
+              <DatePicker onChange={onChange} value={form.dateEnd} name="dateEnd" placeholder="to this dates" />
             </Columns.Column>
             <Columns.Column desktop={{ size: 4 }} tablet={{ size: 12 }} mobile={{ size: 12 }}>
-              <Form.Input onChange={onChange} value={form.travelers} name="travelers" placeholder="and we are 2 persons" />
+              <Form.Input autoComplete="off" onChange={onChange} value={form.travelers} name="travelers" placeholder="and we are 2 persons" />
             </Columns.Column>
           </Columns>
           <Button className="search" color="primary">Search</Button>
