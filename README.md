@@ -24,14 +24,14 @@ Each frontend maintains its own package.json for dependencies.
 The root package.json handles the installation of packages for whichever package you choose to install.
 Running `npm install` will install both sets of packages for Vue and React. 
 
-If you would like to only install the individual packages append the framework name. ie: `npm install-vue`
+If you would like to only install the individual packages append the framework name. ie: `npm run install-vue`
 
 ## Vue Project setup
 From the project root directory run:
 ```
 npm install
 or
-npm install-vue
+npm run install-vue
 ```
 
 ### Vue Compiles and hot-reloads for development
@@ -57,7 +57,7 @@ From the project root directory run:
 ```
 npm install
 or
-npm install-react
+npm run install-react
 ```
 
 ### Serve the react fronted
