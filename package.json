@@ -2,7 +2,7 @@
   "name": "arangobnb-tutorial",
   "private": true,
   "scripts": {
-    "install": "npm run install-vue && npm run install-react",
+    "install": "npm run install-vue && npm run install-react && npm run install-backend",
     "install-backend": "cd ./workspaces/backend && npm install",
     "install-vue": "cd ./workspaces/frontend-vue && npm install --legacy-peer-deps",
     "install-react": "cd ./workspaces/frontend-react && npm install --legacy-peer-deps",
