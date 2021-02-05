@@ -18,9 +18,10 @@ const DatePicker = ({ placeholder = undefined, name = undefined, value = undefin
     const hide = () => {
       setShowCalendar(false);
     };
-    window.requestAnimationFrame(() => {
+    // Trick to close on click outside
+    setTimeout(() => {
       window.addEventListener('click', hide);
-    });
+    }, 100);
     return () => {
       return window.removeEventListener('click', hide);
     };
