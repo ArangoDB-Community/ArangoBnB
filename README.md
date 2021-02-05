@@ -53,9 +53,11 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## React Project Setup
-Make sure you have npm 7 installed. From the project root directory run:
+From the project root directory run:
 ```
 npm install
+or
+npm install-react
 ```
 
 ### Serve the react fronted
