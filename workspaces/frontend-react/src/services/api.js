@@ -9,14 +9,18 @@ export const search = async ({ destination, date, nights, travelers }) => {
 
 export const autocomplete = async ({ term }) => {
   console.log('Search', term);
-  return [
-    {
-      id: 1,
-      value: 'New York, USA',
-    },
-    {
-      id: 2,
-      value: 'Barcelona, Spain',
-    },
-  ];
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve([
+        {
+          id: 1,
+          name: 'New York, USA',
+        },
+        {
+          id: 2,
+          name: 'Barcelona, Spain',
+        },
+      ]);
+    }, 1000);
+  });
 };
