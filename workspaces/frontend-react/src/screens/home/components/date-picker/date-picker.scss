@@ -1,0 +1,12 @@
+.date-picker {
+  position: relative;
+  input {
+    text-align: center;
+  }
+  .calendar-container {
+    position: absolute;
+    left: 0;
+    top: 2.5rem;
+    z-index: 999;
+  }
+}

@@ -3,13 +3,44 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "@testing-library/jest-dom": "5.11.9",
+    "@testing-library/react": "11.2.5",
+    "@testing-library/user-event": "12.6.3",
+    "bulma": "0.9.2",
+    "prop-types": "15.7.2",
+    "react": "17.0.1",
+    "react-bulma-components": "4.0.0-0",
+    "react-calendar": "3.3.1",
+    "react-dom": "17.0.1",
     "react-scripts": "4.0.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "1.1.0"
+  },
+  "devDependencies": {
+    "eslint": "7.19.0",
+    "eslint-config-airbnb": "18.2.1",
+    "eslint-config-prettier": "7.2.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-prettier": "3.3.1",
+    "eslint-plugin-react": "7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "prettier": "2.0.2",
+    "prettier-eslint": "9.0.1",
+    "sass": "1.32.6"
+  },
+  "optionalDependencies": {
+    "husky": "4.2.3",
+    "lint-staged": "10.0.9"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "scripts": {
     "start": "react-scripts start",
