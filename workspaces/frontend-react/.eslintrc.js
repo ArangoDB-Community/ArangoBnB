@@ -10,7 +10,7 @@ module.exports = {
     },
   },
   rules: {
-    'prettier/prettier': 'error',
+    'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'no-console': 0,
     'no-param-reassign': 0,
     'import/no-extraneous-dependencies': 0,
