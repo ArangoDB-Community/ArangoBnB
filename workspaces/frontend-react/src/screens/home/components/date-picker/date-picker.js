@@ -45,6 +45,8 @@ const DatePicker = ({ placeholder = undefined, name = undefined, value = undefin
         }}
         value={value ? value.toLocaleString().split(' ').shift() : ''}
         placeholder={placeholder}
+        autoComplete="off"
+        autoCapitalize="off"
         name={name}
         onFocus={() => {
           return setShowCalendar(true);
