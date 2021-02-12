@@ -1,8 +1,10 @@
 <template>
     <md-button>
+        <div class="datePicker">
         <md-datepicker v-model="selectedDate" md-immediately>
             <label>When's the trip?</label>
         </md-datepicker>
+        </div>
     </md-button>
 </template>
 
@@ -13,5 +15,7 @@ export default {
 </script>
 
 <style>
-
+.datePicker {
+background-color: whitesmoke;
+}
 </style>

@@ -6,15 +6,16 @@
     "start": "node src/server_start.js"
   },
   "dependencies": {
+    "@koa/cors": "^3.1.0",
+    "arangojs": "^7.2.0",
     "koa": "^2.13.1",
-    "koa-router": "^10.0.0",
     "koa-body": "^4.2.0",
-    "arangojs": "^7.2.0"
+    "koa-router": "^10.0.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7",
     "@babel/core": "^7.12.13",
+    "@babel/preset-env": "^7.12.13",
     "@babel/register": "^7.12.13",
-    "@babel/preset-env": "^7.12.13"
+    "nodemon": "^2.0.7"
   }
 }
