@@ -3,7 +3,7 @@ import { Button, Card, Columns, Form, Hero, Loader } from 'react-bulma-component
 import * as api from 'services/api';
 import logo from 'assets/images/logo.webp';
 import './home.scss';
-import { Autocomplete } from 'components/autucomplete';
+import { Autocomplete } from 'components/autocomplete';
 import { DatePicker } from './components/date-picker';
 
 const Home = () => {
