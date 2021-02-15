@@ -30,9 +30,10 @@ export default {
     }),
     methods: {
       getResults: function() {
+        // TODO: "setup proper project variables"
         let config = {
           method: 'get',
-          url: 'http://localhost:5000/',
+          url: 'http://localhost:5000/api/results',
           headers: { }
         };
         axios(config)
