@@ -6,7 +6,8 @@ To get started:
 * Check out the project todos:
   * [Primary Project board (Vue frontend & Backend tasks)](https://github.com/cw00dw0rd/ArangoBnB/projects/1)
   * [React Project board](https://github.com/users/cw00dw0rd/projects/1), (thanks [@couds](https://github.com/couds) and [@lostpebble](https://github.com/lostpebble) for leading the react version.)
-* The dataset will need some modeling changes to take advantage of ArangoDB features so keep an eye out for changes to the dataset task [#16](https://github.com/cw00dw0rd/ArangoBnB/issues/16). We will update this bullet once we have landed on the final dataset.
+* The dataset will need some modeling changes to take advantage of ArangoDB features so keep an eye out for changes to the dataset task [#16](https://github.com/cw00dw0rd/ArangoBnB/issues/16).
+  * The dataset we are using can be found [here](https://drive.google.com/drive/folders/1crMM2RRpdVgi7gkblAlAZXTvIoNNVYbT?usp=sharing). We will make new folders for new dumps when necessary. [https://drive.google.com/drive/folders/1crMM2RRpdVgi7gkblAlAZXTvIoNNVYbT?usp=sharing](https://drive.google.com/drive/folders/1crMM2RRpdVgi7gkblAlAZXTvIoNNVYbT?usp=sharing)
 
 Some goals for the project include:
 * Search an AirBnB dataset to find rentals nearby a specified location
