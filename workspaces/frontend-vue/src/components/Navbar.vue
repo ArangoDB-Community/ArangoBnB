@@ -1,11 +1,7 @@
 <template>
   <div>
-    <md-toolbar class="md-primary">
-      <!-- <md-button class="md-icon-button" @click="showNavigation = true">
-        <md-icon>menu</md-icon>
-      </md-button> -->
+    <md-toolbar>
       <span class="md-title">ArangoBnB</span>
-
       <div class="md-toolbar-section-end">
         <md-button>Become a host</md-button>
         <md-button class="md-icon-button">
@@ -22,13 +18,13 @@
       </div>
     </md-toolbar>
     <md-drawer class="md-right" :md-active.sync="showSidepanel">
-      <md-toolbar class="md-transparent" md-elevation="0">
+      <md-toolbar class="md" md-elevation="0">
         <span class="md-title">Favorites</span>
       </md-toolbar>
 
       <md-list>
         <md-list-item>
-          <span class="md-list-item-text" v-on:click="changeTheme" >Toggle Theme</span>
+          <!-- <span class="md-list-item-text" v-on:click="changeTheme" >Toggle Theme</span> -->
 
           <md-button class="md-icon-button md-list-action">
             <md-icon class="md-primary">chat_bubble</md-icon>
@@ -61,7 +57,6 @@
 import Vue from 'vue'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
-import 'vue-material/dist/theme/default-dark.css' // This line here
 
   export default {
     name: 'Navbar',
@@ -75,10 +70,6 @@ import 'vue-material/dist/theme/default-dark.css' // This line here
 </script>
 
 <style lang="scss" scoped> 
-  .md-primary {
-    background: transparent !important;
-  }
-
   .globe {
     font-size: 16px;
   }
@@ -99,9 +90,9 @@ import 'vue-material/dist/theme/default-dark.css' // This line here
     border-radius: 25px;
   }
   
-  .user-icons {
-    color: rgba(0, 0, 0, 0.54);
-  }
+  // .user-icons {
+  //   color: black;
+  // }
 
   .md-content {
     padding: 16px;

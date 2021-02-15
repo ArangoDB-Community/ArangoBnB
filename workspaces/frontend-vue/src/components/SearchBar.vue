@@ -1,23 +1,49 @@
 <template>
-  <div class="md-layout md-elevation-15 searchBar">
-    <SearchBarInput class="md-layout-item"/>
+<div class="search-root">
+  <div v-on:click="getResults" class="md-layout md-elevation-15 searchBar">
+    <SearchBarInput class="md-layout-item" />
     <SearchBarDatePicker class="md-layout-item"/>
     <SearchBarGuests class="md-layout-item" />
   </div>
+      <Results class="results" v-bind:listings=listings />
+</div>
 </template>
 
 <script>
 import SearchBarDatePicker from './SearchBarDatePicker'
 import SearchBarInput from './SearchBarInput'
 import SearchBarGuests from './SearchBarGuests'
+import Results from './Results'
+import axios from 'axios'
 
 export default {
     name: 'SearchBar',
     components: {
       SearchBarDatePicker,
       SearchBarInput,
-      SearchBarGuests
+      SearchBarGuests,
+      Results
     },
+    data: () => ({
+      results: {"test": 1},
+      listings: []
+    }),
+    methods: {
+      getResults: function() {
+        // TODO: "setup proper project variables"
+        let config = {
+          method: 'get',
+          url: 'http://localhost:5000/api/results',
+          headers: { }
+        };
+        axios(config)
+        .then((response) => {
+          console.log(response); 
+              this.listings = response.data
+              console.log(this.listings)
+              })
+    }
+},
 }
 </script>
 
@@ -30,7 +56,14 @@ export default {
   transform: translate(-50%, -50%);
   width: 50%;
   border-radius: 25px;
-  background-color: black;
-  opacity: .75;
+  background-color: whitesmoke;
   }
+
+  .results {
+    position: absolute;
+    top: 30%;
+    width: 75%;
+    left: 12.5%
+  }
+
 </style>

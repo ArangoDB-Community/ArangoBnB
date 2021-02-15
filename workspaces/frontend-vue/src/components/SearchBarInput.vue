@@ -11,9 +11,9 @@
 <script>
 export default {
     name: "SearchBarInput"
-
 }
 </script>
+
 
 <style>
 

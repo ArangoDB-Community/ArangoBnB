@@ -1,29 +1,35 @@
 <template>
 <div>
-  <div class="page-container md-layout-column" :style="{backgroundImage: `url(${backgroundURL})`}">
     <Navbar />
-    <SearchBar />
+  <div class="page-container " :style="{backgroundImage: `url(${backgroundURL})`}">
   </div>
+    <SearchBar />
 </div>
 </template>
 
 <script>
 import Navbar from '../components/Navbar.vue'
 import SearchBar from '../components/SearchBar.vue'
+import Vue from 'vue'
+import VueMaterial from 'vue-material'
+// import 'vue-material/dist/vue-material.min.css'
+// import 'vue-material/dist/theme/default-dark.css' // This line here
+
 
   export default {
     name: 'Home',
     components: {
       Navbar,
-      SearchBar
+      SearchBar,
     },
     data: () => ({
       showNavigation: false,
       showSidepanel: false,
-      backgroundURL: "https://images.unsplash.com/photo-1534528770941-33118ceae543?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2158&q=80",
+      backgroundURL: "https://upload.wikimedia.org/wikipedia/commons/8/84/Berlin_aerial_view_%2840858786523%29.jpg",
     })
   }
 
+  Vue.use(VueMaterial)
 </script>
 
 <style lang="scss" scoped>
@@ -35,5 +41,7 @@ import SearchBar from '../components/SearchBar.vue'
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    background-color: whitesmoke;
   }
+  
 </style>

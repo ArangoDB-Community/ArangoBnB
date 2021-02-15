@@ -46,9 +46,9 @@ export default {
 </script>
 
 <style>
-.guests {
-    background-color: black;
-    opacity: 1;
+.guestMenu {
+    background-color: whitesmoke;
+    
 }
 
 </style>
