@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="md-layout">
+    <div class="md-layout-item md-scrollbar resultCards">
     <md-card v-for="listing in listings" :key="listing._key" md-with-hover>
       <md-card-area>
         <md-card-media>
@@ -13,40 +14,81 @@
       </md-card-area>
 
       <md-card-actions md-alignment="left">
-        <md-button>${{listing.price}} / night</md-button>
+        <md-button class="priceBtn">${{listing.price}} / night</md-button>
       </md-card-actions>
     </md-card>
-
+    </div>
+    <div class="md-layout-item md-size-70" id="mapContainer"></div>    
 </div>
 </template>
 
 <script>
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+
 export default {
     name: "Results",
     data: () => ({
+      MAPBOX_KEY: process.env.VUE_APP_MAPBOX_KEY, // place your own in .env.local
     }),
     props: {
-        listings: Array
+      listings: Array
     },
     methods: {
-        getImg: function() {
-
-        }
+        setupLeafletMap: function () {
+          let mymap = L.map('mapContainer').setView([52.53454,13.40256], 13);
+          L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: this.MAPBOX_KEY
+        }).addTo(mymap);
+      },
+    },
+    mounted() {
+      this.setupLeafletMap();
+      this.getResults();
     }
 
 }
 </script>
 
 <style lang="scss" scoped>
+  .resultCards {
+    overflow: auto;
+    max-height: 70vh;
+  }
   .md-card {
-    width: 320px;
-    margin: 8px;
+    width: 90%;
+    margin-bottom: 8px;
+    margin-top: 8px;
     display: inline-block;
-    vertical-align: top;
     background: whitesmoke;
+    border-radius: 25px;
+
+    
   }
   .md-card-media img{
-      width: 320px;
-      height: 215px;
+    margin-top: 8px;
+    padding-right: 8px;
+    padding-left: 8px;
+    border-radius: 25px;
+
+  }
+  .priceBtn {
+  border-radius: 25px;
+
+  }
+
+  #mapContainer {
+    height: 64vh;
+    width: 60vw;
+    z-index: 0;
+    margin-top: 1vw;
+    margin-right: 1vw;
+    border-radius: 25px;
+
   }
 </style>

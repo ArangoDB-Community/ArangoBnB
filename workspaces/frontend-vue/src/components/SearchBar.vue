@@ -5,7 +5,9 @@
     <SearchBarDatePicker class="md-layout-item"/>
     <SearchBarGuests class="md-layout-item" />
   </div>
-      <Results class="results" v-bind:listings=listings />
+  <div>
+  <Results class="results" v-bind:listings=listings />
+</div>
 </div>
 </template>
 
@@ -25,15 +27,16 @@ export default {
       Results
     },
     data: () => ({
+      API: process.env.VUE_APP_API_ENDPOINT,
       results: {"test": 1},
       listings: []
     }),
     methods: {
       getResults: function() {
-        // TODO: "setup proper project variables"
+        console.log(process.env)
         let config = {
           method: 'get',
-          url: 'http://localhost:5000/api/results',
+          url: this.API + "/api/results",
           headers: { }
         };
         axios(config)
@@ -44,6 +47,9 @@ export default {
               })
     }
 },
+mounted() {
+  this.getResults();
+}
 }
 </script>
 
@@ -60,10 +66,13 @@ export default {
   }
 
   .results {
-    position: absolute;
-    top: 30%;
-    width: 75%;
-    left: 12.5%
-  }
+  position: absolute;
+  top: 30%;
+  left: 2.5vw;
+  width: 95vw;
+  background-color: rgba(245, 245, 245, 0.75);
+  border-radius: 25px;
+
+}
 
 </style>

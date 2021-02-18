@@ -17,37 +17,6 @@
         </div>
       </div>
     </md-toolbar>
-    <md-drawer class="md-right" :md-active.sync="showSidepanel">
-      <md-toolbar class="md" md-elevation="0">
-        <span class="md-title">Favorites</span>
-      </md-toolbar>
-
-      <md-list>
-        <md-list-item>
-          <!-- <span class="md-list-item-text" v-on:click="changeTheme" >Toggle Theme</span> -->
-
-          <md-button class="md-icon-button md-list-action">
-            <md-icon class="md-primary">chat_bubble</md-icon>
-          </md-button>
-        </md-list-item>
-
-        <md-list-item>
-          <span class="md-list-item-text">Alex Nelson</span>
-
-          <md-button class="md-icon-button md-list-action">
-            <md-icon class="md-primary">chat_bubble</md-icon>
-          </md-button>
-        </md-list-item>
-
-        <md-list-item>
-          <span class="md-list-item-text">Mary Johnson</span>
-
-          <md-button class="md-icon-button md-list-action">
-            <md-icon>chat_bubble</md-icon>
-          </md-button>
-        </md-list-item>
-      </md-list>
-    </md-drawer>
   </div>
 </template>
 
@@ -78,23 +47,9 @@ import 'vue-material/dist/vue-material.min.css'
     font-size: 22px;
   }
 
-   // Demo purposes only
-  .md-drawer {
-    width: 230px;
-    max-width: calc(100vw - 125px);
-  }
-
   .user-area {
     background-color: #709554;
     padding: 3px;
     border-radius: 25px;
-  }
-  
-  // .user-icons {
-  //   color: black;
-  // }
-
-  .md-content {
-    padding: 16px;
   }
 </style>

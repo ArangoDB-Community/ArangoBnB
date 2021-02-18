@@ -27,6 +27,19 @@ Running `npm install` will install both sets of packages for Vue and React.
 
 If you would like to only install the individual packages append the framework name. ie: `npm run install-vue`
 
+## Environment Variables
+This project uses `.env` and `.env.local` for the various environment variables needed, see the [Vue docs](https://cli.vuejs.org/guide/mode-and-env.html#modes) for more info. You will mostly need to pay attention to and update the variables in `.env.local`.
+
+Since `.env.local` will not be included in PR's, this list should be updated when a PR adds to these variables.
+
+Currently, these are the needed variables.
+### `.env`
+* `VUE_APP_API_ENDPOINT`
+
+### `.env.local`
+* `VUE_APP_MAPBOX_KEY` ([mapbox.com](https://www.mapbox.com/))
+
+
 ## Vue Project setup
 From the project root directory run:
 ```

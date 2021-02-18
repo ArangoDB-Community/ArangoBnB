@@ -12,9 +12,6 @@ import Navbar from '../components/Navbar.vue'
 import SearchBar from '../components/SearchBar.vue'
 import Vue from 'vue'
 import VueMaterial from 'vue-material'
-// import 'vue-material/dist/vue-material.min.css'
-// import 'vue-material/dist/theme/default-dark.css' // This line here
-
 
   export default {
     name: 'Home',
