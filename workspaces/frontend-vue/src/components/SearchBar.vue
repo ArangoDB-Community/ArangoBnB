@@ -63,7 +63,7 @@ mounted() {
   width: 50%;
   border-radius: 25px;
   background-color: whitesmoke;
-  }
+}
 
   .results {
   position: absolute;
@@ -72,7 +72,7 @@ mounted() {
   width: 95vw;
   background-color: rgba(245, 245, 245, 0.75);
   border-radius: 25px;
-
+  backdrop-filter: blur(15px);
 }
 
 </style>

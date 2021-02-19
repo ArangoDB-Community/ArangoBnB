@@ -17,8 +17,10 @@
         <md-button class="priceBtn">${{listing.price}} / night</md-button>
       </md-card-actions>
     </md-card>
+    <strong>Events:</strong>
+    <pre>{{events.join('\n')}}</pre>
     </div>
-    <div class="md-layout-item md-size-70" id="mapContainer"></div>    
+    <div class="md-layout-item md-size-70" id="mapContainer"></div>
 </div>
 </template>
 
@@ -30,13 +32,21 @@ export default {
     name: "Results",
     data: () => ({
       MAPBOX_KEY: process.env.VUE_APP_MAPBOX_KEY, // place your own in .env.local
+      events: [],
     }),
     props: {
       listings: Array
     },
     methods: {
+        logEvent: function (type, text) {
+          if (this.events.length > 25) {
+            this.events = this.events.slice(0, 25);
+          }
+          this.events.unshift(`${type}: ${text}`);
+        },
         setupLeafletMap: function () {
           let mymap = L.map('mapContainer').setView([52.53454,13.40256], 13);
+          /*
           L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
@@ -44,7 +54,28 @@ export default {
             tileSize: 512,
             zoomOffset: -1,
             accessToken: this.MAPBOX_KEY
+          }).addTo(mymap);
+          */
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            minZoom: 3,
+            maxZoom: 18,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            //noWrap: true,
+            useCache: true,
         }).addTo(mymap);
+        mymap.on('zoom', e => {
+          this.logEvent(e.type, e.target.getZoom());
+        });
+        mymap.on('moveend', e => {
+          const bounds = e.target.getBounds();
+          const boundsString = [
+            bounds.getNorth(),
+            bounds.getEast(),
+            bounds.getSouth(),
+            bounds.getWest(),
+          ].map(n => n.toFixed(3)).join(', ');
+          this.logEvent(e.type, boundsString);
+        })
       },
     },
     mounted() {
@@ -68,7 +99,7 @@ export default {
     background: whitesmoke;
     border-radius: 25px;
 
-    
+
   }
   .md-card-media img{
     margin-top: 8px;
