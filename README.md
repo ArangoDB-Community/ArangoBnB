@@ -37,7 +37,7 @@ Currently, these are the needed variables.
 * `VUE_APP_API_ENDPOINT`
 
 ### `.env.local`
-* `VUE_APP_MAPBOX_KEY` ([mapbox.com](https://www.mapbox.com/))
+
 
 
 ## Vue Project setup

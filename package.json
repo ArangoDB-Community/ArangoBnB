@@ -12,6 +12,5 @@
     "build": "cd ./workspaces/frontend-vue && npm run build",
     "lint": "cd ./workspaces/frontend-vue && npm run lint"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
