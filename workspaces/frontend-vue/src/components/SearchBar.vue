@@ -1,12 +1,12 @@
 <template>
 <div class="search-root">
-  <div v-on:click="getResults" class="md-layout md-elevation-15 searchBar">
+  <div class="md-layout md-elevation-15 searchBar">
     <SearchBarInput class="md-layout-item" />
     <SearchBarDatePicker class="md-layout-item"/>
     <SearchBarGuests class="md-layout-item" />
   </div>
   <div>
-  <Results class="results" v-bind:listings=listings />
+  <Results class="results" />
 </div>
 </div>
 </template>
@@ -15,8 +15,7 @@
 import SearchBarDatePicker from './SearchBarDatePicker'
 import SearchBarInput from './SearchBarInput'
 import SearchBarGuests from './SearchBarGuests'
-import Results from './Results'
-import axios from 'axios'
+import Results from '../views/Results'
 
 export default {
     name: 'SearchBar',
@@ -26,30 +25,7 @@ export default {
       SearchBarGuests,
       Results
     },
-    data: () => ({
-      API: process.env.VUE_APP_API_ENDPOINT,
-      results: {"test": 1},
-      listings: []
-    }),
-    methods: {
-      getResults: function() {
-        console.log(process.env)
-        let config = {
-          method: 'get',
-          url: this.API + "/api/results",
-          headers: { }
-        };
-        axios(config)
-        .then((response) => {
-          console.log(response); 
-              this.listings = response.data
-              console.log(this.listings)
-              })
-    }
-},
-mounted() {
-  this.getResults();
-}
+    data: () => ({}),
 }
 </script>
 

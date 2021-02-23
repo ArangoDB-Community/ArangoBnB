@@ -31,9 +31,26 @@ ApiRouter.all("/api/test", async (ctx) => {
 ApiRouter.get("/api/results", async (ctx) => {
   const result = [];
   const cursor = await ctx.db.query(aql`
-    FOR results IN listings
+    FOR results IN arangobnb
     LIMIT 10
     RETURN results
+    `);
+  for await (const c of cursor){
+    console.log(c)
+    result.push(c);
+  }
+  sendResponse(ctx, result);
+})
+
+ApiRouter.post("/api/mapResults", async (ctx) => {
+  const result = [];
+  const mapArea = ctx.request.body.mapArea;
+  console.log(mapArea);
+  const cursor = await ctx.db.query(aql`
+    FOR listing IN arangobnb
+    SEARCH ANALYZER(GEO_CONTAINS(GEO_POLYGON(${mapArea}), listing.location), "geo")
+    LIMIT 10
+    RETURN listing
     `);
   for await (const c of cursor){
     console.log(c)

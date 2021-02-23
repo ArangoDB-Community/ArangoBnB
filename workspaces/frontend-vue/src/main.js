@@ -1,4 +1,5 @@
 import Vue from 'vue'
+
 import App from './App.vue'
 
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -7,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/theme/default.css'
+
 Vue.use(VueMaterial)
 
 
