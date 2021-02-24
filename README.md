@@ -27,6 +27,15 @@ If you have any suggestions or features that you would like to be added start a 
 This project uses features from the upcoming 3.8 version of ArangoDB. To get started you will need the nightly build version of ArangoDB.
 For more information on how to get a nightly build please see the [nighly builds page](https://www.arangodb.com/nightly-builds/).
 
+Currently, the changes are in `devel` so make sure to use the `devel-nightly` build.
+For example, if you are using docker:
+```
+docker pull arangodb/arangodb-preview:devel-nightly
+
+docker run -d -e ARANGO_ROOT_PASSWORD="test" -p 8529:8529 arangodb/arangodb-preview:devel-nightly
+ 
+```
+
 ## Project Setup
 
 Each frontend maintains its own package.json for dependencies. 
