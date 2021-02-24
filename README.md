@@ -20,7 +20,14 @@ Some goals for the project include:
 We would enjoy having anyone from the community participate in the project development! 
 If you have any suggestions or features that you would like to be added start a discussion or open an issue.
 
-# Contributing 
+# Contributing
+
+## ArangoDB Installation
+
+This project uses features from the upcoming 3.8 version of ArangoDB. To get started you will need the nightly build version of ArangoDB.
+For more information on how to get a nightly build please see the [nighly builds page](https://www.arangodb.com/nightly-builds/).
+
+## Project Setup
 
 Each frontend maintains its own package.json for dependencies. 
 The root package.json handles the installation of packages for whichever package you choose to install.
