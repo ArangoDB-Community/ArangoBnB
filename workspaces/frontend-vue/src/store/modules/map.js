@@ -26,14 +26,14 @@ const getters = {
 const actions = {
   getResults: async ({ commit, state}, payload) => {
     payload ? (
-        payload.mapArea ? await commit('setMapArea', payload.mapArea) : console.log('no mapArea')) : console.log('no payload')
+      payload.mapArea ? await commit('setMapArea', payload.mapArea) : console.log('no mapArea')) : console.log('no payload')
     
     let data = JSON.stringify({"mapArea": state.mapArea});
 
     let config = {
       method: 'post',
       url: API + '/api/mapResults',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json'
       },
       data : data

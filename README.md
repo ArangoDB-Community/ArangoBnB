@@ -1,4 +1,5 @@
 # ArangoBnB
+
 This web app is being created to showcase the GeoJSON functionality of ArangoSearch and to provide an example of ArangoDB being used in a JavaScript stack.
 
 To get started:
@@ -16,24 +17,27 @@ Some goals for the project include:
 * Index data using ArangoSearch Views
 * Use AQL for all queries
 
-We would enjoy having anyone from the community participate in the project development! 
+We would enjoy having anyone from the community participate in the project development!
 If you have any suggestions or features that you would like to be added start a discussion or open an issue.
 
-# Contributing 
+# Contributing
 
-Each frontend maintains its own package.json for dependencies. 
+Each frontend maintains its own package.json for dependencies.
 The root package.json handles the installation of packages for whichever package you choose to install.
-Running `npm install` will install both sets of packages for Vue and React. 
+Running `npm install` will install both sets of packages for Vue and React.
 
 If you would like to only install the individual packages append the framework name. ie: `npm run install-vue`
 
 ## Environment Variables
+
 This project uses `.env` and `.env.local` for the various environment variables needed, see the [Vue docs](https://cli.vuejs.org/guide/mode-and-env.html#modes) for more info. You will mostly need to pay attention to and update the variables in `.env.local`.
 
 Since `.env.local` will not be included in PR's, this list should be updated when a PR adds to these variables.
 
 Currently, these are the needed variables.
+
 ### `.env`
+
 * `VUE_APP_API_ENDPOINT`
 
 ### `.env.local`
@@ -41,40 +45,49 @@ Currently, these are the needed variables.
 
 
 ## Vue Project setup
+
 From the project root directory run:
-```
+
+```shell
 npm install
-or
+# or
 npm run install-vue
 ```
 
 ### Vue Compiles and hot-reloads for development
-```
+
+```shell
 npm run serve
 ```
 
 ### Vue Compiles and minifies for production
-```
+
+```shell
 npm run build
 ```
 
 ### Vue Lints and fixes files
-```
+
+```shell
 npm run lint
 ```
 
 ### Customize configuration
+
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## React Project Setup
+
 From the project root directory run:
-```
+
+```shell
 npm install
-or
+# or
 npm run install-react
 ```
 
 ### Serve the react fronted
-```
+
+```shell
 npm run serve-react
 ```

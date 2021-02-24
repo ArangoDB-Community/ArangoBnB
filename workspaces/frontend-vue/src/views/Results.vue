@@ -27,5 +27,4 @@ import Map from "../components/Map";
 
 <style lang="scss" scoped>
 
-  
 </style>

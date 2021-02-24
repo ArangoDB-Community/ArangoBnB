@@ -1,13 +1,13 @@
 <template>
-    <div class="md-layout-item md-size-70" id="mapContainer"></div>
+  <div class="md-layout-item md-size-70" id="mapContainer"></div>
 </template>
 
 <script>
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { mapState } from 'vuex'
-import mapMarker from "../assets/ArangoMapMarker.png"
-import mapMarkerShadow from "../assets/ArangoMapMarker_shadow.png"
+import { mapState } from "vuex";
+import mapMarker from "../assets/ArangoMapMarker.png";
+import mapMarkerShadow from "../assets/ArangoMapMarker_shadow.png";
 
 export default {
   name: "Map",
@@ -16,19 +16,17 @@ export default {
   }),
   computed: mapState({
     markers: (state) => {
-      console.log('computing')
-      return state.map.markers
-    }
-  })
-  ,
+      console.log("computing");
+      return state.map.markers;
+    },
+  }),
   methods: {
-    showHide: function() {
-      console.log("showHide")
+    showHide: function () {
+      console.log("showHide");
       this.showEvents = !this.showEvents;
     },
-    logEvent: function(type, text) {
-      this.$store.commit('map/setEvents', {type, text});
-      
+    logEvent: function (type, text) {
+      this.$store.commit("map/setEvents", { type, text });
     },
     getPolygonFromBounds: async function (latLngBounds) {
       let center = latLngBounds.getCenter();
@@ -48,10 +46,9 @@ export default {
     },
     getResults: async function (e) {
       let mapArea = await this.getPolygonFromBounds(e.target.getBounds());
-      await this.$store.dispatch('map/getResults', {mapArea});  
-      
+      await this.$store.dispatch("map/getResults", { mapArea });
     },
-    setupLeafletMap: function() {
+    setupLeafletMap: function () {
       const iconX = 36;
       const iconY = 36;
       const mapIcon = L.Icon.extend({
@@ -62,27 +59,29 @@ export default {
           iconAnchor:   [iconX, iconY], // point of the icon which will correspond to marker's location
           shadowAnchor: [iconX, iconY],  // the same for the shadow
           popupAnchor:  [-15, -iconY] // point from which the popup should open relative to the iconAnchor
-        }
+        },
       });
 
       let mymap = L.map("mapContainer");
 
       function addMarkers(markers) {
-        console.log(markers)
-        const arangoIcon = new mapIcon({iconUrl: mapMarker});
+        console.log(markers);
+        const arangoIcon = new mapIcon({ iconUrl: mapMarker });
         let m;
-        for(m in markers) {
-          L.marker([markers[m][0], markers[m][1]], {icon: arangoIcon}).bindPopup(` ${markers[m][0]} ${markers[m][1]} `).addTo(mymap);        
+        for (m in markers) {
+          L.marker([markers[m][0], markers[m][1]], { icon: arangoIcon })
+            .bindPopup(` ${markers[m][0]} ${markers[m][1]} `)
+            .addTo(mymap);
         }
       }
 
-      mymap.on("load",async  (e) => {
+      mymap.on("load", async (e) => {
         await this.getResults(e);
         addMarkers(this.markers);
       });
 
       mymap.setView([52.5163120794449, 13.380521317397218], 16); // Brandenburg Gate
-      
+
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         minZoom: 3,
         maxZoom: 18,
@@ -91,11 +90,11 @@ export default {
         useCache: true,
       }).addTo(mymap);
 
-      mymap.on("zoomend",  (e) => {
+      mymap.on("zoomend", (e) => {
         this.logEvent(e.type, e.target.getZoom());
       });
 
-      mymap.on('movestart',  (e) => {
+      mymap.on("movestart", (e) => {
         const bounds = e.target.getBounds();
 
         const boundsString = [
@@ -103,15 +102,16 @@ export default {
           bounds.getEast(),
           bounds.getSouth(),
           bounds.getWest(),
-        ].map(n => n.toFixed(3)).join(', ');
+        ]
+          .map((n) => n.toFixed(3))
+          .join(", ");
         this.logEvent(e.type, boundsString);
-    });
-    
-    mymap.on('moveend',  async (e) => {
-      await this.getResults(e)
-      await addMarkers(this.markers);
-    })
-      
+      });
+
+      mymap.on("moveend", async (e) => {
+        await this.getResults(e);
+        await addMarkers(this.markers);
+      });
     },
   },
   mounted() {
@@ -121,7 +121,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 #mapContainer {
   height: 64vh;
   width: 60vw;

@@ -57,5 +57,5 @@ import Results from './Results.vue'
   border-radius: 25px;
   backdrop-filter: blur(15px);
   }
-  
+
 </style>

@@ -31,14 +31,14 @@ import 'vue-material/dist/vue-material.min.css'
     name: 'Navbar',
     data: () => ({
       showNavigation: false,
-      showSidepanel: false    
+      showSidepanel: false
       })
   }
   Vue.use(VueMaterial)
 
 </script>
 
-<style lang="scss" scoped> 
+<style lang="scss" scoped>
   .globe {
     font-size: 16px;
   }
