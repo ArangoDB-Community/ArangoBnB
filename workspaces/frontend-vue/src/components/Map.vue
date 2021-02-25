@@ -13,42 +13,47 @@ export default {
   name: "Map",
   data: () => ({
     showEvents: true,
-    mymap: {}
   }),
   computed: mapState({
-    markers: state => state.map.markers
-  }),
+    markers: (state) => {
+      console.log('computing')
+      return state.map.markers
+    }
+  })
+  ,
   methods: {
     showHide: function() {
+      console.log("showHide")
       this.showEvents = !this.showEvents;
     },
     logEvent: function(type, text) {
       this.$store.commit('map/setEvents', {type, text});
       
     },
-    getPolygonFromBounds: function (latLngBounds) {
+    getPolygonFromBounds: async function (latLngBounds) {
       let center = latLngBounds.getCenter();
       let latlngs = [];
 
-      latlngs.push([latLngBounds.getSouthWest().lng, latLngBounds.getSouthWest().lat]);//bottom left
-      latlngs.push([ center.lng, latLngBounds.getSouth() ]);//bottom center
-      latlngs.push([latLngBounds.getSouthEast().lng, latLngBounds.getSouthEast().lat]);//bottom right
-      latlngs.push([latLngBounds.getEast(), center.lat]);// center right
-      latlngs.push([latLngBounds.getNorthEast().lng, latLngBounds.getNorthEast().lat]);//top right
-      latlngs.push([center.lng, latLngBounds.getNorth() ]);//top center
-      latlngs.push([latLngBounds.getNorthWest().lng, latLngBounds.getNorthWest().lat]);//top left
-      latlngs.push([latLngBounds.getWest(), center.lat]);//center left
-      latlngs.push([latLngBounds.getSouthWest().lng, latLngBounds.getSouthWest().lat]);//bottom left
+      await latlngs.push([latLngBounds.getSouthWest().lng, latLngBounds.getSouthWest().lat]);//bottom left
+      await latlngs.push([ center.lng, latLngBounds.getSouth() ]);//bottom center
+      await latlngs.push([latLngBounds.getSouthEast().lng, latLngBounds.getSouthEast().lat]);//bottom right
+      await latlngs.push([latLngBounds.getEast(), center.lat]);// center right
+      await latlngs.push([latLngBounds.getNorthEast().lng, latLngBounds.getNorthEast().lat]);//top right
+      await latlngs.push([center.lng, latLngBounds.getNorth() ]);//top center
+      await latlngs.push([latLngBounds.getNorthWest().lng, latLngBounds.getNorthWest().lat]);//top left
+      await latlngs.push([latLngBounds.getWest(), center.lat]);//center left
+      await latlngs.push([latLngBounds.getSouthWest().lng, latLngBounds.getSouthWest().lat]);//bottom left
 
       return latlngs;
     },
-    getResults: function (e) {
-      let mapArea = this.getPolygonFromBounds(e.target.getBounds());
-      this.$store.dispatch('map/getResults', {mapArea});
+    getResults: async function (e) {
+      let mapArea = await this.getPolygonFromBounds(e.target.getBounds());
+      await this.$store.dispatch('map/getResults', {mapArea});  
+      
     },
     setupLeafletMap: function() {
-      const iconX = 30;
-      const iconY = 32;
+      const iconX = 36;
+      const iconY = 36;
       const mapIcon = L.Icon.extend({
         options: {
           shadowUrl: mapMarkerShadow,
@@ -60,49 +65,53 @@ export default {
         }
       });
 
+      let mymap = L.map("mapContainer");
 
-      let mymap = L.map("mapContainer").setView([52.53454, 13.40256], 13);
+      function addMarkers(markers) {
+        console.log(markers)
+        const arangoIcon = new mapIcon({iconUrl: mapMarker});
+        let m;
+        for(m in markers) {
+          L.marker([markers[m][0], markers[m][1]], {icon: arangoIcon}).bindPopup(` ${markers[m][0]} ${markers[m][1]} `).addTo(mymap);        
+        }
+      }
+
+      mymap.on("load",async  (e) => {
+        await this.getResults(e);
+        addMarkers(this.markers);
+      });
+
+      mymap.setView([52.5163120794449, 13.380521317397218], 16); // Brandenburg Gate
       
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         minZoom: 3,
         maxZoom: 18,
         attribution:
           '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        //noWrap: true,
         useCache: true,
       }).addTo(mymap);
-      mymap.on("zoom", (e) => {
-        this.getResults(e);
-        this.logEvent(e.type, e.target.getZoom(), e);
 
-        // TODO: Handle this in another function
-        const markers = this.markers;
-        const arangoIcon = new mapIcon({iconUrl: mapMarker});
-        let m;
-        for(m in markers) {
-          L.marker([markers[m][0], markers[m][1]], {icon: arangoIcon}).bindPopup("I am an icon").addTo(mymap);        
-        }
+      mymap.on("zoomend",  (e) => {
+        this.logEvent(e.type, e.target.getZoom());
       });
-        mymap.on('moveend', e => {
-          const bounds = e.target.getBounds();
 
-          const boundsString = [
-            bounds.getNorth(),
-            bounds.getEast(),
-            bounds.getSouth(),
-            bounds.getWest(),
-          ].map(n => n.toFixed(3)).join(', ');
-          this.logEvent(e.type, boundsString);
-          this.getResults(e);
+      mymap.on('movestart',  (e) => {
+        const bounds = e.target.getBounds();
 
-          // TODO: Handle this in another function
-          const markers = this.markers;
-          const arangoIcon = new mapIcon({iconUrl: mapMarker});
-          let m;
-          for(m in markers) {
-            L.marker([markers[m][0], markers[m][1]], {icon: arangoIcon}).bindPopup("I am an icon").addTo(mymap);        
-          }
-      });
+        const boundsString = [
+          bounds.getNorth(),
+          bounds.getEast(),
+          bounds.getSouth(),
+          bounds.getWest(),
+        ].map(n => n.toFixed(3)).join(', ');
+        this.logEvent(e.type, boundsString);
+    });
+    
+    mymap.on('moveend',  async (e) => {
+      await this.getResults(e)
+      await addMarkers(this.markers);
+    })
+      
     },
   },
   mounted() {

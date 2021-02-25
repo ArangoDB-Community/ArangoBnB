@@ -49,7 +49,7 @@ ApiRouter.post("/api/mapResults", async (ctx) => {
   const cursor = await ctx.db.query(aql`
     FOR listing IN arangobnb
     SEARCH ANALYZER(GEO_CONTAINS(GEO_POLYGON(${mapArea}), listing.location), "geo")
-    LIMIT 10
+    LIMIT 20
     RETURN listing
     `);
   for await (const c of cursor){

@@ -44,9 +44,6 @@ export default {
       this.showEvents = !this.showEvents;
     }
   },
-  mounted () {
-    this.$store.dispatch('map/getResults');
-  }
 };
 </script>
 
