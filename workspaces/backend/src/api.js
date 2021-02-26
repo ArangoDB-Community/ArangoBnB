@@ -44,16 +44,17 @@ ApiRouter.get("/api/results", async (ctx) => {
 
 ApiRouter.post("/api/mapResults", async (ctx) => {
   const result = [];
-  const mapArea = ctx.request.body.mapArea;
-  console.log(mapArea);
+  const [north, east, south, west] = ctx.request.body.mapArea;
+  const poly = [[west, north], [east, north], [east, south], [west, south], [west, north]];
+  console.log(poly);
   const cursor = await ctx.db.query(aql`
     FOR listing IN arangobnb
-    SEARCH ANALYZER(GEO_CONTAINS(GEO_POLYGON(${mapArea}), listing.location), "geo")
+    SEARCH ANALYZER(GEO_CONTAINS(GEO_POLYGON(${poly}), listing.location), "geo")
     LIMIT 20
     RETURN listing
     `);
   for await (const c of cursor){
-    console.log(c)
+    //console.log(c)
     result.push(c);
   }
   sendResponse(ctx, result);

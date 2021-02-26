@@ -22,12 +22,12 @@ const getters = {
   }
 };
 
-// // actions
+// actions
 const actions = {
-  getResults: async ({ commit, state}, payload) => {
+  getResults: async ({commit, state}, payload) => {
     payload ? (
       payload.mapArea ? await commit('setMapArea', payload.mapArea) : console.log('no mapArea')) : console.log('no payload')
-    
+
     let data = JSON.stringify({"mapArea": state.mapArea});
 
     let config = {

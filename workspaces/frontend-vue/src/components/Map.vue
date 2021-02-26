@@ -28,24 +28,16 @@ export default {
     logEvent: function (type, text) {
       this.$store.commit("map/setEvents", { type, text });
     },
-    getPolygonFromBounds: async function (latLngBounds) {
-      let center = latLngBounds.getCenter();
-      let latlngs = [];
-
-      await latlngs.push([latLngBounds.getSouthWest().lng, latLngBounds.getSouthWest().lat]);//bottom left
-      await latlngs.push([ center.lng, latLngBounds.getSouth() ]);//bottom center
-      await latlngs.push([latLngBounds.getSouthEast().lng, latLngBounds.getSouthEast().lat]);//bottom right
-      await latlngs.push([latLngBounds.getEast(), center.lat]);// center right
-      await latlngs.push([latLngBounds.getNorthEast().lng, latLngBounds.getNorthEast().lat]);//top right
-      await latlngs.push([center.lng, latLngBounds.getNorth() ]);//top center
-      await latlngs.push([latLngBounds.getNorthWest().lng, latLngBounds.getNorthWest().lat]);//top left
-      await latlngs.push([latLngBounds.getWest(), center.lat]);//center left
-      await latlngs.push([latLngBounds.getSouthWest().lng, latLngBounds.getSouthWest().lat]);//bottom left
-
-      return latlngs;
+    getCardinalDirectionsFromBounds: function (bounds) {
+      return [
+        bounds.getNorth(),
+        bounds.getEast(),
+        bounds.getSouth(),
+        bounds.getWest(),
+      ].map(v => Math.round(v * 10000) / 10000) // up to 4 decimal places
     },
     getResults: async function (e) {
-      let mapArea = await this.getPolygonFromBounds(e.target.getBounds());
+      let mapArea = this.getCardinalDirectionsFromBounds(e.target.getBounds());
       await this.$store.dispatch("map/getResults", { mapArea });
     },
     setupLeafletMap: function () {
@@ -57,8 +49,8 @@ export default {
           iconSize:     [iconX, iconY], // size of the icon
           shadowSize:   [iconX, iconY], // size of the shadow
           iconAnchor:   [iconX, iconY], // point of the icon which will correspond to marker's location
-          shadowAnchor: [iconX, iconY],  // the same for the shadow
-          popupAnchor:  [-15, -iconY] // point from which the popup should open relative to the iconAnchor
+          shadowAnchor: [iconX, iconY], // the same for the shadow
+          popupAnchor:  [-15, -iconY] , // point from which the popup should open relative to the iconAnchor
         },
       });
 
