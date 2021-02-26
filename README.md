@@ -9,6 +9,7 @@ To get started:
   * [React Project board](https://github.com/users/cw00dw0rd/projects/1), (thanks [@couds](https://github.com/couds) and [@lostpebble](https://github.com/lostpebble) for leading the react version.)
 * The dataset will need some modeling changes to take advantage of ArangoDB features so keep an eye out for changes to the dataset task [#16](https://github.com/cw00dw0rd/ArangoBnB/issues/16).
   * The dataset we are using can be found [here](https://drive.google.com/drive/folders/1crMM2RRpdVgi7gkblAlAZXTvIoNNVYbT?usp=sharing). We will make new folders for new dumps when necessary. [https://drive.google.com/drive/folders/1crMM2RRpdVgi7gkblAlAZXTvIoNNVYbT?usp=sharing](https://drive.google.com/drive/folders/1crMM2RRpdVgi7gkblAlAZXTvIoNNVYbT?usp=sharing)
+* We now have a community projects Slack channel, [join us](https://arangodb-community.slack.com/archives/C01MLH491UM)!
 
 Some goals for the project include:
 * Search an AirBnB dataset to find rentals nearby a specified location
@@ -21,6 +22,21 @@ We would enjoy having anyone from the community participate in the project devel
 If you have any suggestions or features that you would like to be added start a discussion or open an issue.
 
 # Contributing
+## ArangoDB Installation
+
+This project uses features from the upcoming 3.8 version of ArangoDB. To get started you will need the nightly build version of ArangoDB.
+For more information on how to get a nightly build please see the [nighly builds page](https://www.arangodb.com/nightly-builds/).
+
+Currently, the changes are in `devel` so make sure to use the `devel-nightly` build.
+For example, if you are using docker:
+```
+docker pull arangodb/arangodb-preview:devel-nightly
+
+docker run -d -e ARANGO_ROOT_PASSWORD="test" -p 8529:8529 arangodb/arangodb-preview:devel-nightly
+ 
+```
+
+## Project Setup
 
 Each frontend maintains its own package.json for dependencies.
 The root package.json handles the installation of packages for whichever package you choose to install.
