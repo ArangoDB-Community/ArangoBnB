@@ -28,14 +28,10 @@ const DatePicker = ({ placeholder = undefined, name = undefined, value = undefin
   return (
     <div ref={ref} className="date-picker">
       <Form.Input
-        onChange={() => {
-          return null;
-        }}
         value={value ? value.toLocaleString().split(' ').shift() : ''}
         placeholder={placeholder}
-        autoComplete="off"
-        autoCapitalize="off"
         name={name}
+        readOnly
         onFocus={() => {
           return setShowCalendar(true);
         }}
