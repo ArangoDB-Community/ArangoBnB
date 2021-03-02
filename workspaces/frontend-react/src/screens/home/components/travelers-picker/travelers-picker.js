@@ -26,10 +26,6 @@ const TravelersPicker = ({ value, onChange }) => {
   });
 
   const onIncrease = (event) => {
-    console.log({
-      ...value,
-      [event.target.dataset.name]: value[event.target.dataset.name] + 1,
-    });
     onChange({
       target: {
         name: 'travelers',
