@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Button, Card, Columns, Form, Hero } from 'react-bulma-components';
+import { Button, Card, Columns, Hero } from 'react-bulma-components';
 import * as api from 'services/api';
 import logo from 'assets/images/logo.webp';
 import './home.scss';
 import { DatePicker } from './components/date-picker';
 import DestinationPicker from './components/destination-picker';
+import TravelersPicker from './components/travelers-picker';
 
 const Home = () => {
-  const [form, setForm] = useState({ destination: '', dateStart: undefined, dateEnd: undefined, travelers: '' });
+  const [form, setForm] = useState({ destination: '', dateStart: undefined, dateEnd: undefined, travelers: { adults: 1, children: 0 } });
 
   const onSelectDestination = (option) => {
     setForm((state) => {
@@ -43,7 +44,7 @@ const Home = () => {
       <Hero.Body>
         <Card renderAs="form" onSubmit={onSubmit} className="search-form">
           <Columns breakpoint="mobile">
-            <Columns.Column desktop={{ size: 4 }} tablet={{ size: 12 }} mobile={{ size: 12 }}>
+            <Columns.Column desktop={{ size: 5 }} tablet={{ size: 12 }} mobile={{ size: 12 }}>
               <DestinationPicker onSelect={onSelectDestination} onChange={onChange} value={form.destination} />
             </Columns.Column>
             <Columns.Column desktop={{ size: 2 }} tablet={{ size: 6 }} mobile={{ size: 12 }}>
@@ -52,8 +53,8 @@ const Home = () => {
             <Columns.Column desktop={{ size: 2 }} tablet={{ size: 6 }} mobile={{ size: 12 }}>
               <DatePicker onChange={onChange} value={form.dateEnd} name="dateEnd" placeholder="to this dates" />
             </Columns.Column>
-            <Columns.Column desktop={{ size: 4 }} tablet={{ size: 12 }} mobile={{ size: 12 }}>
-              <Form.Input autoComplete="off" onChange={onChange} value={form.travelers} name="travelers" placeholder="and we are 2 persons" />
+            <Columns.Column desktop={{ size: 3 }} tablet={{ size: 12 }} mobile={{ size: 12 }}>
+              <TravelersPicker onChange={onChange} value={form.travelers} />
             </Columns.Column>
           </Columns>
           <Button className="search" color="primary">
