@@ -1,37 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Card, Columns, Form, Hero, Loader } from 'react-bulma-components';
+import React, { useState } from 'react';
+import { Button, Card, Columns, Form, Hero } from 'react-bulma-components';
 import * as api from 'services/api';
 import logo from 'assets/images/logo.webp';
 import './home.scss';
-import { Autocomplete } from 'components/autocomplete';
 import { DatePicker } from './components/date-picker';
+import DestinationPicker from './components/destination-picker';
 
 const Home = () => {
   const [form, setForm] = useState({ destination: '', dateStart: undefined, dateEnd: undefined, travelers: '' });
-  const [destinations, setDestinations] = useState({
-    options: [],
-    selected: undefined,
-  });
-  const [showAutocomplete, setShowAutocomplete] = useState(false);
-
-  useEffect(async () => {
-    if (!form.destination || !showAutocomplete) {
-      setDestinations({
-        options: [],
-        selected: undefined,
-      });
-      return;
-    }
-    setDestinations({
-      options: [{ isLoading: true }],
-      selected: undefined,
-    });
-    const options = await api.autocomplete({ term: form.destination });
-    setDestinations({
-      options,
-      selected: undefined,
-    });
-  }, [form.destination, showAutocomplete]);
 
   const onSelectDestination = (option) => {
     setForm((state) => {
@@ -68,36 +44,7 @@ const Home = () => {
         <Card renderAs="form" onSubmit={onSubmit} className="search-form">
           <Columns breakpoint="mobile">
             <Columns.Column desktop={{ size: 4 }} tablet={{ size: 12 }} mobile={{ size: 12 }}>
-              <div style={{ position: 'relative ' }}>
-                <Form.Input
-                  onFocus={() => {
-                    setShowAutocomplete(true);
-                  }}
-                  onBlur={() => {
-                    setShowAutocomplete(false);
-                  }}
-                  autoComplete="off"
-                  autoCapitalize="off"
-                  onChange={onChange}
-                  value={form.destination}
-                  name="destination"
-                  placeholder="I want to go to"
-                />
-                {showAutocomplete && (
-                  <Autocomplete options={destinations.options} onSelect={onSelectDestination}>
-                    {(option) => {
-                      if (option.isLoading) {
-                        return (
-                          <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <Loader color="primary" />
-                          </div>
-                        );
-                      }
-                      return <div>{option.name}</div>;
-                    }}
-                  </Autocomplete>
-                )}
-              </div>
+              <DestinationPicker onSelect={onSelectDestination} onChange={onChange} value={form.destination} />
             </Columns.Column>
             <Columns.Column desktop={{ size: 2 }} tablet={{ size: 6 }} mobile={{ size: 12 }}>
               <DatePicker onChange={onChange} value={form.dateStart} name="dateStart" placeholder="from this date" />
