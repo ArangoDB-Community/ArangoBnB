@@ -33,6 +33,8 @@ const Home = () => {
     api.search(form);
   };
 
+  const isDisabled = !form.destination || !form.dateStart || !form.dateEnd || !form.travelers.adults;
+
   return (
     <Hero className="home" size="fullheight">
       <Hero.Head className="header" renderAs="header">
@@ -57,7 +59,7 @@ const Home = () => {
               <TravelersPicker onChange={onChange} value={form.travelers} />
             </Columns.Column>
           </Columns>
-          <Button className="search" color="primary">
+          <Button rounded disabled={isDisabled} className="search" color="primary">
             Search
           </Button>
         </Card>
