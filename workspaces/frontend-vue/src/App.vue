@@ -5,10 +5,17 @@
 </template>
 
 <script>
+import store from './store'
 import Home from './views/Home.vue'
+import Vuex from 'vuex'
+import Vue from 'vue'
+
+Vue.use(Vuex)
+
 
 export default {
   name: 'App',
+  store,
   components: {
     Home
   }

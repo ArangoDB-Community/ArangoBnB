@@ -4,7 +4,7 @@
     <md-field>
       <label>Who's coming?</label>
       <md-input v-model="type" disabled></md-input>
-    </md-field>    
+    </md-field>
 </md-button>
 
     <md-menu :md-offset-x="-300" :md-offset-y="0" :md-active.sync=menu>
@@ -45,10 +45,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .guestMenu {
     background-color: whitesmoke;
-    
 }
 
 </style>

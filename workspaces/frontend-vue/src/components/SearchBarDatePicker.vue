@@ -14,7 +14,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .datePicker {
 background-color: whitesmoke;
 }
