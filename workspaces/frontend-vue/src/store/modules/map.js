@@ -62,10 +62,9 @@ const mutations = {
       return await state.mapArea;
   },
   setMarkers(state) {
-    console.log("setting markers")
     state.markers = [];
     state.listings.map( (listing) => {
-        state.markers.push([listing.latitude, listing.longitude])
+        state.markers.push([{latitude: listing.latitude, longitude: listing.longitude, key: listing._key, name: listing.name}])
     })
   }
 };

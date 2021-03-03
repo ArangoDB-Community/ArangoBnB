@@ -1,12 +1,8 @@
 <template>
-<div class="search-root">
   <div class="md-layout md-elevation-15 searchBar">
     <SearchBarInput class="md-layout-item" />
     <SearchBarDatePicker class="md-layout-item"/>
     <SearchBarGuests class="md-layout-item" />
-  </div>
-  <div>
-</div>
 </div>
 </template>
 
@@ -26,8 +22,8 @@ export default {
 }
 </script>
 
-<style>
-  .searchBar {
+<style scoped>
+.searchBar {
   margin: 0;
   position: absolute;
   top: 20%;
