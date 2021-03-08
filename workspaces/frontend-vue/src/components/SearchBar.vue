@@ -1,28 +1,28 @@
 <template>
   <div class="md-layout md-elevation-15 searchBar">
-    <SearchBarInput class="md-layout-item" />
-    <SearchBarDatePicker class="md-layout-item"/>
-    <SearchBarGuests class="md-layout-item" />
+    <SearchBarDestination class="md-layout-item md-medium-size-100 searchBarItem" />
+    <SearchBarDatePicker class="md-layout-item md-medium-size-100 searchBarItem"/>
+    <SearchBarGuests class="md-layout-item md-medium-size-100 searchBarItem" />
 </div>
 </template>
 
 <script>
 import SearchBarDatePicker from './SearchBarDatePicker'
-import SearchBarInput from './SearchBarInput'
+import SearchBarDestination from './SearchBarDestination'
 import SearchBarGuests from './SearchBarGuests'
 
 export default {
     name: 'SearchBar',
     components: {
       SearchBarDatePicker,
-      SearchBarInput,
+      SearchBarDestination,
       SearchBarGuests,
     },
     data: () => ({}),
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .searchBar {
   margin: 0;
   position: absolute;
@@ -32,6 +32,7 @@ export default {
   width: 50%;
   border-radius: 25px;
   background-color: whitesmoke;
+  z-index: 3;
 }
 
 </style>
