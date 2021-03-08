@@ -28,7 +28,7 @@ export default {
   }),
   watch: {
     mapPosition: function() {
-      this.mymap.setView([this.mapPosition.y, this.mapPosition.x]);
+      this.mymap.setView([this.mapPosition.y, this.mapPosition.x], 16);
       }
   },
   methods: {
