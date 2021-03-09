@@ -62,13 +62,13 @@ export default {
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
   width: 50vw;
-  margin-top: -21px;
+  margin-top: -25px;
   position: fixed;
   overflow: hidden;
+  background: whitesmoke !important;
 }
 .destinationResults {
   padding-top: 20px;
-  background-color: whitesmoke;
 }
 .md-list-item:hover {
   cursor: pointer;
