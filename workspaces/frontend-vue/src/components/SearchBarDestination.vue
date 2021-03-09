@@ -8,11 +8,13 @@
       <md-tooltip>Ex: "Museum Island"</md-tooltip>
     </md-field>
 </md-button>
-<md-list class="destinationResults" v-if="query">
+<div class="destinationResults" v-if="query">
+<md-list>
 <md-list-item class="destinationAutoComplete" v-for="destination in destinations.slice(0,5)" :key="destination.raw.place_id">
   <span v-on:click="setDestination({x: destination.x, y: destination.y})"> {{destination.label}} </span>
 </md-list-item>
 </md-list>
+</div>
 </div>
 </template>
 
@@ -60,12 +62,13 @@ export default {
   border-bottom-left-radius: 25px;
   border-bottom-right-radius: 25px;
   width: 50vw;
-  margin-top: -20px;
+  margin-top: -21px;
   position: fixed;
   overflow: hidden;
 }
 .destinationResults {
-  z-index: 4;
+  padding-top: 20px;
+  background-color: whitesmoke;
 }
 .md-list-item:hover {
   cursor: pointer;
