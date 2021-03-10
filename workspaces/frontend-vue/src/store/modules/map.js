@@ -10,7 +10,8 @@ export const state = () => ({
   mapArea: [[13.3733650830416,52.513472114606735],[13.380215444865636,52.513472114606735],[13.387065806689671,52.513472114606735],[13.387065806689671,52.51550916176831],[13.387065806689671,52.51754620892988],[13.380215444865636,52.51754620892988],[13.3733650830416,52.51754620892988],[13.3733650830416,52.51550916176831],[13.3733650830416,52.513472114606735]],
   listings: [],
   markers:[],
-  mapPosition: {}
+  mapPosition: {},
+  filters: []
 });
 
 // getters
@@ -55,6 +56,17 @@ const actions = {
     } catch (e) {
       console.log(e)
     }
+  },
+  getFilters: ({commit}) => {
+    let config = {
+      method: 'get',
+      url: API + '/api/filters'
+    };
+    axios(config)
+    .then( (response) => {
+      console.log(response.data)
+      commit("setFilters", { filters: response.data });
+    })    
   }
 };
 
@@ -83,7 +95,14 @@ const mutations = {
     try {
       Vue.set(state, 'mapPosition', position.destination);
     } catch (e) {
-      console.log(e)
+      console.log(e);
+    }
+  },
+  setFilters(state, filters) {
+    try {
+      Vue.set(state, 'filters', filters);
+    } catch(e) {
+      console.log(e);
     }
   }
 };

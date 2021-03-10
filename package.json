@@ -8,7 +8,7 @@
     "install-react": "cd ./workspaces/frontend-react && npm install --legacy-peer-deps",
     "serve": "cd ./workspaces/frontend-vue && npm run serve",
     "serve-react": "cd ./workspaces/frontend-react && npm run start",
-    "serve-backend": "cd ./workspaces/backend && npm run start",
+    "serve-backend": "cd ./workspaces/backend && npm run dev",
     "build": "cd ./workspaces/frontend-vue && npm run build",
     "lint": "cd ./workspaces/frontend-vue && npm run lint"
   },

@@ -55,6 +55,22 @@ ApiRouter.post("/api/mapResults", async (ctx) => {
   sendResponse(ctx, result);
 })
 
+ApiRouter.get("/api/filters", async (ctx) => {
+  const result = [];
+  const cursor = await ctx.db.query(aql`
+    FOR doc in arangobnb
+      FOR amenity in doc.amenities
+        COLLECT item = amenity with COUNT into c
+        SORT c DESC
+        LIMIT 20
+        RETURN item
+    `);
+  for await (const c of cursor){
+    result.push(c);
+  }
+  sendResponse(ctx, result);
+})
+
 ApiRouter.all("(.*)", async (ctx) => {
   sendResponse(ctx, { text: "Nothing to see here" }, 404);
 })
