@@ -1,31 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form } from 'react-bulma-components';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './date-picker.scss';
+import useonClickOutside from 'hooks/useOnClickOutside';
 
 const DatePicker = ({ placeholder = undefined, name = undefined, value = undefined, onChange }) => {
   const [showCalendar, setShowCalendar] = useState(false);
 
-  useEffect(() => {
-    if (!showCalendar) {
-      return () => {
-        return null;
-      };
-    }
+  const ref = useRef();
 
-    const hide = () => {
-      setShowCalendar(false);
-    };
-    // Trick to close on click outside
-    setTimeout(() => {
-      window.addEventListener('click', hide);
-    }, 100);
-    return () => {
-      return window.removeEventListener('click', hide);
-    };
-  }, [showCalendar]);
+  useonClickOutside(ref, () => {
+    setShowCalendar(false);
+  });
 
   const onSelectDate = (newValue) => {
     setShowCalendar(false);
@@ -38,16 +26,12 @@ const DatePicker = ({ placeholder = undefined, name = undefined, value = undefin
   };
 
   return (
-    <div className="date-picker">
+    <div ref={ref} className="date-picker">
       <Form.Input
-        onChange={() => {
-          return null;
-        }}
         value={value ? value.toLocaleString().split(' ').shift() : ''}
         placeholder={placeholder}
-        autoComplete="off"
-        autoCapitalize="off"
         name={name}
+        readOnly
         onFocus={() => {
           return setShowCalendar(true);
         }}
