@@ -123,8 +123,6 @@ export default {
       });
 
       mymap.on("movestart", (e) => {
-        console.log(L.marker)
-
         const bounds = e.target.getBounds();
 
         const boundsString = [
