@@ -53,7 +53,7 @@ const Home = () => {
               <DatePicker onChange={onChange} value={form.dateStart} name="dateStart" placeholder="from this date" />
             </Columns.Column>
             <Columns.Column desktop={{ size: 2 }} tablet={{ size: 6 }} mobile={{ size: 12 }}>
-              <DatePicker onChange={onChange} value={form.dateEnd} name="dateEnd" placeholder="to this dates" />
+              <DatePicker onChange={onChange} value={form.dateEnd} name="dateEnd" placeholder="to this date" />
             </Columns.Column>
             <Columns.Column desktop={{ size: 3 }} tablet={{ size: 12 }} mobile={{ size: 12 }}>
               <TravelersPicker onChange={onChange} value={form.travelers} />

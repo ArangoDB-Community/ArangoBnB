@@ -10,7 +10,7 @@ const getTextValue = (value) => {
     return '';
   }
   if (value.adults === 1 && value.children === 0) {
-    return 'and I travel alone';
+    return 'and I will travel alone';
   }
 
   return `and we are ${value.adults} adult${value.adults > 1 ? 's' : ''} ${value.children > 0 ? `and ${value.children} children` : ''}`.trim();
