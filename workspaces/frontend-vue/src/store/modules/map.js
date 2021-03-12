@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import axios from 'axios'
 
 const API = process.env.VUE_APP_API_ENDPOINT
@@ -8,7 +9,8 @@ export const state = () => ({
   //default map area
   mapArea: [[13.3733650830416,52.513472114606735],[13.380215444865636,52.513472114606735],[13.387065806689671,52.513472114606735],[13.387065806689671,52.51550916176831],[13.387065806689671,52.51754620892988],[13.380215444865636,52.51754620892988],[13.3733650830416,52.51754620892988],[13.3733650830416,52.51550916176831],[13.3733650830416,52.513472114606735]],
   listings: [],
-  markers:[]
+  markers:[],
+  mapPosition: {}
 });
 
 // getters
@@ -19,6 +21,9 @@ const getters = {
   getMarkers: (state) => {
     const markers = state.markers;
     return markers;
+  },
+  getMapPosition: (state) => {
+    return state.mapPosition;
   }
 };
 
@@ -44,6 +49,13 @@ const actions = {
       commit("setMarkers");
     })
   },
+  setDestination: ({commit}, payload) => {
+    try {
+      commit('setMapPosition', payload)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 };
 
 // mutations
@@ -66,6 +78,13 @@ const mutations = {
     state.listings.map( (listing) => {
         state.markers.push([{latitude: listing.latitude, longitude: listing.longitude, key: listing._key, name: listing.name}])
     })
+  },
+  setMapPosition(state, position){
+    try {
+      Vue.set(state, 'mapPosition', position.destination);
+    } catch (e) {
+      console.log(e)
+    }
   }
 };
 

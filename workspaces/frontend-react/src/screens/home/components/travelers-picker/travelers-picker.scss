@@ -1,0 +1,30 @@
+@import "variables.scss";
+
+.travelers-picker {
+  .picker {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: 0;
+    z-index: 1;
+    .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.75rem;
+      &:first-child {
+        border-bottom: 1px solid $grey-lighter;
+      }
+    }
+    .count-selector {
+      * {
+        margin: 0 0.5rem;
+      }
+      .tag {
+        cursor: pointer;
+        &:hover {
+          background-color: $grey-light;
+        }
+      }
+    }
+  }
+}
