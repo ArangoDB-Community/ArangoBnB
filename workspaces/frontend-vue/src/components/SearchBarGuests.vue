@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="guestButton">
   <md-button md-menu-trigger v-on:click="showMenu">
     <md-field>
       <label>Who's coming?</label>
@@ -49,5 +49,7 @@ export default {
 .guestMenu {
     background-color: whitesmoke;
 }
-
+.guestButton {
+  z-index: 3;
+}
 </style>

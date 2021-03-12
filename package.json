@@ -13,6 +13,8 @@
     "lint": "cd ./workspaces/frontend-vue && npm run lint"
   },
   "dependencies": {
+    "leaflet-geosearch": "^3.2.1",
+    "lodash": "^4.17.21",
     "vuex": "^3.6.2"
   }
 }

@@ -11,17 +11,26 @@ import mapMarkerShadow from "../assets/ArangoMapMarker_shadow.png";
 import listingsCard from './listingsCard';
 import Vue from 'vue'
 
+// const mymap = L.map("mapContainer");
+
 export default {
   name: "Map",
   components: {    
   },
   data: () => ({
-    showEvents: true
+    showEvents: true,
+    mymap: {}
   }),
   computed:
   mapState({
-    listings: state => state.map.listings
+    listings: state => state.map.listings,
+    mapPosition: state => state.map.mapPosition,
   }),
+  watch: {
+    mapPosition: function() {
+      this.mymap.setView([this.mapPosition.y, this.mapPosition.x], 16);
+      }
+  },
   methods: {
     showHide: function () {
       this.showEvents = !this.showEvents;
@@ -54,8 +63,7 @@ export default {
           popupAnchor:  [-15, -iconY] , // point from which the popup should open relative to the iconAnchor
         },
       });
-
-      let mymap = L.map("mapContainer");
+      let mymap = this.mymap // likely even more refactoring possible now with mymap hoisted
 
       let markersKeys = [];
 
@@ -115,8 +123,6 @@ export default {
       });
 
       mymap.on("movestart", (e) => {
-        console.log(L.marker)
-
         const bounds = e.target.getBounds();
 
         const boundsString = [
@@ -137,6 +143,7 @@ export default {
     },
   },
   mounted() {
+    this.mymap = L.map("mapContainer")
     this.setupLeafletMap();
   },
 };
