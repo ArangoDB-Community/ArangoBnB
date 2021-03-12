@@ -14,6 +14,7 @@ ApiRouter.use("(.*)", async (ctx, next) => {
   try {
     await next();
   } catch (e) {
+    console.error(e);
     sendResponse(ctx, {
       error: e.message,
     }, 500)

@@ -38,6 +38,28 @@ docker run -d -e ARANGO_ROOT_PASSWORD="test" -p 8529:8529 arangodb/arangodb-prev
 
 ## Project Setup
 
+### Using Docker Compose
+
+- First you need to download the dump of the DB from [here](https://drive.google.com/drive/folders/1crMM2RRpdVgi7gkblAlAZXTvIoNNVYbT?usp=sharing)
+- Extract the content inside the folder database/dumps. Its should looks like
+```
+dumps
+|_ arangobnb.view.json
+|_ arangobnb.view.json:Zone.Identifier
+...
+```
+
+- Run `docker-compose up`. (The first time could take a few minutes, the docker images are beign build and the database dump its beign restored)
+
+- Now you can access the Arango Web Interface in [http://localhost:8529](http://localhost:8529)
+- Vue Frontend [http://localhost:8080](http://localhost:8080)
+- React Frontend [http://localhost:8081](http://localhost:8081)
+- Backend (API) [http://localhost:8001](http://localhost:8001)
+
+
+
+### Without docker
+
 Each frontend maintains its own package.json for dependencies.
 The root package.json handles the installation of packages for whichever package you choose to install.
 Running `npm install` will install both sets of packages for Vue and React.

@@ -10,9 +10,8 @@
     "serve-react": "cd ./workspaces/frontend-react && npm run start",
     "serve-backend": "cd ./workspaces/backend && npm run start",
     "build": "cd ./workspaces/frontend-vue && npm run build",
-    "lint": "cd ./workspaces/frontend-vue && npm run lint"
-  },
-  "dependencies": {
-    "vuex": "^3.6.2"
+    "lint": "cd ./workspaces/frontend-vue && npm run lint",
+    "docker:start": "docker-compose up -d",
+    "docker:stop": "docker-compose down"
   }
 }
