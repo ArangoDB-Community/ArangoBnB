@@ -19,6 +19,8 @@
     "leaflet": "^1.7.1",
     "vue": "^2.6.12",
     "vue-material": "^1.0.0-beta-15",
+    "leaflet-geosearch": "^3.2.1",
+    "lodash": "^4.17.21",
     "vuex": "3.6.2"
   },
   "devDependencies": {
