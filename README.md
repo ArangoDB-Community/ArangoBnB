@@ -22,25 +22,12 @@ We would enjoy having anyone from the community participate in the project devel
 If you have any suggestions or features that you would like to be added start a discussion or open an issue.
 
 # Contributing
-## ArangoDB Installation
-
-This project uses features from the upcoming 3.8 version of ArangoDB. To get started you will need the nightly build version of ArangoDB.
-For more information on how to get a nightly build please see the [nighly builds page](https://www.arangodb.com/nightly-builds/).
-
-Currently, the changes are in `3.8.0` so make sure to use the `3.8.0-nightly` build.
-For example, if you are using docker:
-```
-docker pull arangodb/arangodb-preview:3.8.0-nightly
-
-docker run -d -e ARANGO_ROOT_PASSWORD="test" -p 8529:8529 arangodb/arangodb-preview:3.8.0-nightly
- 
-```
 
 ## Project Setup
 
 ### Using Docker Compose
 
-- First you need to download the dump of the DB from [here](https://drive.google.com/drive/folders/1crMM2RRpdVgi7gkblAlAZXTvIoNNVYbT?usp=sharing)
+- First you need to download the dump of the DB from [here](https://drive.google.com/drive/folders/1zYq3SGzdVwEkoeG9kllOWuHEh6NUMDBq?usp=sharing)
 - Extract the content inside the folder database/dumps. Its should looks like
 ```
 dumps
@@ -60,13 +47,27 @@ dumps
 
 ### Without docker
 
+#### ArangoDB Installation
+
+This project uses features from the upcoming 3.8 version of ArangoDB. To get started you will need the nightly build version of ArangoDB.
+For more information on how to get a nightly build please see the [nighly builds page](https://www.arangodb.com/nightly-builds/).
+
+Currently, the changes are in `3.8.0` so make sure to use the `3.8.0-nightly` build.
+For example, if you are using docker:
+```
+docker pull arangodb/arangodb-preview:3.8.0-nightly
+
+docker run -d -e ARANGO_ROOT_PASSWORD="test" -p 8529:8529 arangodb/arangodb-preview:3.8.0-nightly
+
+```
+
 Each frontend maintains its own package.json for dependencies.
 The root package.json handles the installation of packages for whichever package you choose to install.
 Running `npm install` will install both sets of packages for Vue and React.
 
 If you would like to only install the individual packages append the framework name. ie: `npm run install-vue`
 
-## Environment Variables
+#### Environment Variables
 
 This project uses `.env` and `.env.local` for the various environment variables needed, see the [Vue docs](https://cli.vuejs.org/guide/mode-and-env.html#modes) for more info. You will mostly need to pay attention to and update the variables in `.env.local`.
 
@@ -74,11 +75,11 @@ Since `.env.local` will not be included in PR's, this list should be updated whe
 
 Currently, these are the needed variables.
 
-### `.env`
+##### `.env`
 
-* `VUE_APP_API_ENDPOINT`
+`VUE_APP_API_ENDPOINT`
 
-### `.env.local`
+##### `.env.local`
 
 
 

@@ -27,7 +27,7 @@ services:
     env_file:
       - ./workspaces/backend/.env.local
     ports:
-      - 8001:4000
+      - 8001:5000
     volumes:
       - ./workspaces/backend/src:/code/src
     command: node .bin/watch.js
