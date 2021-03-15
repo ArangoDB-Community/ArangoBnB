@@ -1,16 +1,15 @@
 {
     "include": [
-        "./workspaces/frontend-vue/src/**/*"
+        "./src/**/*"
     ],
     "exclude": [
         "node_modules",
-        "./workspaces/frontend-vue/node_modules"
     ],
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
             "components/*": [
-                "./workspaces/frontend-vue/src/components/*"
+                "./src/components/*"
             ]
         }
     }
