@@ -3,6 +3,9 @@
 // Import a Google Font
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
-$family-sans-serif: "Nunito", sans-serif;
+@import "~bulma/sass/utilities/initial-variables.sass";
 
-@import "node_modules/bulma/sass/utilities/_all";
+$family-sans-serif: "Nunito", sans-serif;
+$primary: #577138;
+
+@import "~bulma/sass/utilities/derived-variables.sass";
