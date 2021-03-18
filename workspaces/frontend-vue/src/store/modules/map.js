@@ -74,7 +74,6 @@ const actions = {
     payload.amenities ? commit("setSelectedAmmenities", payload) : ''
     payload.priceRange ? commit("setSelectedPriceRange", payload) : ''
     dispatch("getResults")
-
   }
 };
 

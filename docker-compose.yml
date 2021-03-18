@@ -1,0 +1,65 @@
+version: "3.9"
+
+services:
+  arango:
+    image: arangobnb-db
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    environment:
+      - ARANGO_ROOT_PASSWORD=123
+    ports:
+      - 8529:8529
+    volumes:
+      - .data:/var/lib/arangodb3:delegated
+  backend:
+    image: arangobnb-backend
+    build:
+      context: ./workspaces/backend
+      dockerfile: Dockerfile
+      target: base
+      args:
+        - NODE_ENV=development
+    environment:
+      - NODE_ENV=development
+      - DB_PASSWORD=123
+      - DB_URL=http://arango:8529
+    env_file:
+      - ./workspaces/backend/.env.local
+    ports:
+      - 8001:5000
+    volumes:
+      - ./workspaces/backend/src:/code/src
+    command: node .bin/watch.js
+  frontend-react:
+    image: arangobnb-frontend-react
+    build:
+      context: ./workspaces/frontend-react
+      dockerfile: Dockerfile
+      target: base
+      args:
+        - NODE_ENV=development
+    environment:
+      - NODE_ENV=development
+      - API_URL=http://localhost:8001
+    ports:
+      - 8081:3000
+    volumes:
+      - ./workspaces/frontend-react/src:/code/src
+    command: npm start
+  frontend-vue:
+    image: arangobnb-frontend-vue
+    build:
+      context: ./workspaces/frontend-vue
+      dockerfile: Dockerfile
+      target: base
+      args:
+        - NODE_ENV=development
+    environment:
+      - NODE_ENV=development
+      - VUE_APP_API_ENDPOINT=http://localhost:8001
+    ports:
+      - 8080:8080
+    volumes:
+      - ./workspaces/frontend-vue/src:/code/src
+    command: npm run serve
