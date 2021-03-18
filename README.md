@@ -28,6 +28,7 @@ If you have any suggestions or features that you would like to be added start a 
 Currently, there are a couple ways to get started:
 * [With Docker Compose](#with-docker-compose)
 * [NPM and Self-Installed ArangoDB](#npm-and-self-install)
+  * [Backend](#npm-backend-setup)
   * [Vue](#npm-vue-setup)
   * [React](#npm-react-setup)
 
@@ -67,7 +68,7 @@ docker run -d -e ARANGO_ROOT_PASSWORD="test" -p 8529:8529 arangodb/arangodb-prev
 
 ```
 
-### Backend
+<h2 id="npm-backend-setup">Backend</h2>
 ```
 npm install-backend
 
