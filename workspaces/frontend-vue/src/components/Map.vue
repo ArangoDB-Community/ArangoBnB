@@ -25,6 +25,7 @@ export default {
   mapState({
     listings: state => state.map.listings,
     mapPosition: state => state.map.mapPosition,
+    filters: state => state.map.filters
   }),
   watch: {
     mapPosition: function() {
@@ -36,7 +37,10 @@ export default {
       this.showEvents = !this.showEvents;
     },
     logEvent: function (type, text) {
-      this.$store.commit("map/setEvents", { type, text });
+      // Logs move events that the Log Event component relies on
+      // leaving for use in tech component
+      // TODO: Add tech component
+      this.$store.commit("map/setEvents", { type, text }); 
     },
     getCardinalDirectionsFromBounds: function (bounds) {
       return [
@@ -70,7 +74,7 @@ export default {
       function addMarkers(listings) {
         const arangoIcon = new mapIcon({ iconUrl: mapMarker });
 
-        if (markersKeys.length >= 100) {
+        if (markersKeys.length >= 200) {
           markerLayer.clearLayers(); // Would be nice to only clear "old" markers
           markersKeys = [];
         }
@@ -123,8 +127,6 @@ export default {
       });
 
       mymap.on("movestart", (e) => {
-        console.log(L.marker)
-
         const bounds = e.target.getBounds();
 
         const boundsString = [
