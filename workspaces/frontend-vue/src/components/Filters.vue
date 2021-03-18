@@ -33,12 +33,13 @@
     <md-card-content>
         <h3>Pricing</h3>
         <div>
-            <label for="fname">Set Max Price</label>
+            <label for="fname">$0</label>
             <input 
             type="range" 
             min="0" 
             max="1000" 
-            step="1" 
+            step="1"
+            class="priceBar" 
             v-model.number="maxPrice"
             @change="updateFilters"> 
             ${{ maxPrice }}
@@ -84,4 +85,15 @@ updateFilters: function() {
   .md-checkbox {
     display: inline-flex;
   }
+  .priceBar {
+  width: 80%;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+.priceBar:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
 </style>

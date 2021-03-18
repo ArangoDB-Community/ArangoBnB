@@ -24,8 +24,7 @@ export default {
   computed:
   mapState({
     listings: state => state.map.listings,
-    mapPosition: state => state.map.mapPosition,
-    filters: state => state.map.filters
+    mapPosition: state => state.map.mapPosition
   }),
   watch: {
     mapPosition: function() {
