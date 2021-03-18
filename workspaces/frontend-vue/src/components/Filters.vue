@@ -1,12 +1,12 @@
 <template>
 <div>
-    <md-button>
-        <strong v-on:click="showHide">
+    <md-button v-on:click="showHide">
+        <strong>
         {{ showFilters ? "Hide" : "Show"}} Filters
         </strong>
     </md-button>
     <transition name="slide-fade">
-        <md-card class="md-layout-item md-size-100 md-small-size-100" v-if="showFilters">
+        <md-card class="md-layout-item filtersContainer md-size-100 md-small-size-100" v-if="showFilters">
             <md-card-content>
             <h3>Room Types</h3>
             <md-checkbox 
@@ -134,6 +134,12 @@ clearFilters: function() {
 /* .slide-fade-leave-active below version 2.1.8 */ {
   transform: translateY(-20px);
   opacity: 0;
+}
+.filtersContainer {
+  border-radius: 25px;
+  -webkit-mask-image: -webkit-gradient(linear, center top, center bottom, 
+  color-stop(0.00,  rgba(0,0,0,0)),
+  color-stop(0.025,  rgba(0,0,0,1)));
 }
 
 </style>
