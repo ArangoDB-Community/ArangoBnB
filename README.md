@@ -64,6 +64,18 @@ docker pull arangodb/arangodb-preview:3.8.0-nightly
 docker run -d -e ARANGO_ROOT_PASSWORD="test" -p 8529:8529 arangodb/arangodb-preview:3.8.0-nightly
 
 ```
+
+### Backend
+```
+npm install-backend
+
+npm run serve-backend
+```
+You should receive the following message:
+```
+ArangoBnb API Backend listening on :5000
+```
+
 ### Dependency Management 
 Each frontend maintains its own package.json for dependencies.
 The root package.json handles the installation of packages for whichever package you choose to install.
