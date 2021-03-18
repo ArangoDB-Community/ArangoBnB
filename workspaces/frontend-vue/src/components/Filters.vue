@@ -2,9 +2,10 @@
 <div>
     <md-button>
         <strong v-on:click="showHide">
-        Filter Results
+        {{ showFilters ? "Hide" : "Show"}} Filters
         </strong>
     </md-button>
+    <transition name="slide-fade">
         <md-card class="md-layout-item md-size-100 md-small-size-100" v-if="showFilters">
             <md-card-content>
             <h3>Room Types</h3>
@@ -20,14 +21,19 @@
     <md-card-content>
         <h3>Amenities</h3>
         <div>
-            <md-checkbox  
-            v-for="amenity in currentAmenities.slice(0,10)" 
-            :key="amenity" 
-            v-model="filters.amenities" 
-            v-bind:value="amenity"
-            @change="updateFilters">
-            {{amenity}}
-            </md-checkbox>
+          <md-checkbox  
+          v-for="amenity in currentAmenities.slice(0,nextPosition)" 
+          :key="amenity" 
+          v-model="filters.amenities" 
+          v-bind:value="amenity"
+          @change="updateFilters">
+          {{amenity}}
+          </md-checkbox>
+          <md-button>
+            <strong v-on:click="incrementPosition">
+            More...
+            </strong>
+          </md-button>            
         </div>
     </md-card-content>
     <md-card-content>
@@ -45,7 +51,13 @@
             ${{ maxPrice }}
         </div>
     </md-card-content>
-    </md-card>
+    <md-button>
+      <strong v-on:click="clearFilters">
+      Clear Filters
+      </strong>
+  </md-button>
+  </md-card>
+</transition>
 </div>
 </template>
 
@@ -63,11 +75,16 @@ roomTypes: [
   "Shared room",
   "Hotel room"
 ],
-maxPrice: 1000
+maxPrice: 1000,
+position: 0
 }),
 computed:
 mapState({
     currentAmenities: state => state.map.currentAmenities,
+    nextPosition: function() {
+      this.position = this.position + 10
+      return this.position
+    }
 }),
 methods: {
 showHide: function() {
@@ -76,15 +93,27 @@ showHide: function() {
 updateFilters: function() {
     this.filters.priceRange = [0, this.maxPrice]    
     this.$store.dispatch("map/setFilters", this.filters);
-}
+},
+clearFilters: function() {
+    this.filters.priceRange = [];
+    this.filters.roomType = [];
+    this.filters.amenities = [];
+    this.filters.priceRange = [];
+    this.position = 0;
+    this.maxPrice = 1000;
+    this.$store.dispatch("map/setFilters", this.filters);
+  },
+  incrementPosition: function() {
+    this.position += 10;
+  }
 }
 }
 </script>
 
 <style lang="scss" scoped>
-  .md-checkbox {
-    display: inline-flex;
-  }
+.md-checkbox {
+  display: inline-flex;
+}
   .priceBar {
   width: 80%;
   opacity: 0.7;
@@ -94,6 +123,17 @@ updateFilters: function() {
 .priceBar:hover {
   opacity: 1;
   cursor: pointer;
+}
+.slide-fade-enter-active {
+  transition: all .4s ease;
+}
+.slide-fade-leave-active {
+  transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(-20px);
+  opacity: 0;
 }
 
 </style>

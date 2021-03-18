@@ -1,6 +1,6 @@
 <template>
   <div class="md-layout-item md-scrollbar resultsContainer">
-    <Filters />
+    <Filters class="filtersContainer" />
     <listingsCard class="resultCard" v-for="listing in listings" :key="listing._key" v-bind:listing=listing />
   </div>
 
@@ -64,5 +64,13 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+.filtersContainer {
+  width: 90%;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  display: inline-block;
+  background: whitesmoke;
+  border-radius: 25px;
 }
 </style>

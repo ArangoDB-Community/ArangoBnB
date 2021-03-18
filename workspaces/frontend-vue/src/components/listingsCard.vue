@@ -9,6 +9,7 @@
           <div class="md-title">{{ listing.name }}</div>
           <div class="md-subhead">{{ listing.property_type }}</div>
         </md-card-header>
+        <strong>Amenities: </strong> <span v-for="amenity in listing.amenities.slice(0,5)" :key="amenity">{{amenity}}, </span>...
       </md-card-area>
 
       <md-card-actions md-alignment="left">

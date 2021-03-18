@@ -14,7 +14,8 @@ export const state = () => ({
   currentAmenities: [],
   amenities: [],
   roomType: [],
-  priceRange: []
+  priceRange: [],
+  clearMarkers: false
 });
 
 // getters
@@ -69,12 +70,12 @@ const actions = {
       console.log(e)
     }
   },
-  setFilters: ({commit, dispatch}, payload) => {
+  setFilters: async ({commit, dispatch}, payload) => {
     payload.roomType ? commit("setSelectedRoomTypes", payload) : ''
     payload.amenities ? commit("setSelectedAmmenities", payload) : ''
     payload.priceRange ? commit("setSelectedPriceRange", payload) : ''
-    dispatch("getResults")
-
+    await dispatch("getResults");
+    commit("setClearMarkers", true);
   }
 };
 
@@ -133,7 +134,15 @@ const mutations = {
     } catch(e) {
       console.log(e)
     }
-  }  
+  },
+  setClearMarkers(state, payload) {
+    console.log(payload)
+    try{
+      Vue.set(state, 'clearMarkers', payload)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 };
 
 
