@@ -28,6 +28,8 @@ If you have any suggestions or features that you would like to be added start a 
 Currently, there are a couple ways to get started:
 * [With Docker Compose](#with-docker-compose)
 * [NPM and Self-Installed ArangoDB](#npm-and-self-install)
+  * [Vue](#npm-vue-setup)
+  * [React](#npm-react-setup)
 
 <h2 id="with-docker-compose">Using Docker Compose</h2>
 
@@ -98,8 +100,7 @@ Currently, these are the needed variables.
 ##### `.env.local`
 
 
-
-## Vue Project setup
+<h2 id="npm-vue-setup">Vue Project Setup</h2>
 
 From the project root directory run:
 
@@ -131,7 +132,7 @@ npm run lint
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
-## React Project Setup
+<h2 id="npm-react-setup">React Project Setup</h2>
 
 From the project root directory run:
 
