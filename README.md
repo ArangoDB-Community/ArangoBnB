@@ -8,7 +8,7 @@ To get started:
   * [Primary Project board (Vue frontend & Backend tasks)](https://github.com/cw00dw0rd/ArangoBnB/projects/1)
   * [React Project board](https://github.com/users/cw00dw0rd/projects/1), (thanks [@couds](https://github.com/couds) and [@lostpebble](https://github.com/lostpebble) for leading the react version.)
 * The dataset will need some modeling changes to take advantage of ArangoDB features so keep an eye out for changes to the dataset task [#16](https://github.com/cw00dw0rd/ArangoBnB/issues/16).
-  * The dataset we are using can be found [here](https://drive.google.com/drive/folders/1crMM2RRpdVgi7gkblAlAZXTvIoNNVYbT?usp=sharing). We will make new folders for new dumps when necessary. [https://drive.google.com/drive/folders/1crMM2RRpdVgi7gkblAlAZXTvIoNNVYbT?usp=sharing](https://drive.google.com/drive/folders/1crMM2RRpdVgi7gkblAlAZXTvIoNNVYbT?usp=sharing)
+  * The dataset we are using can be found [here](https://drive.google.com/drive/folders/1crMM2RRpdVgi7gkblAlAZXTvIoNNVYbT?usp=sharing). We will make new folders for new dumps when necessary, always use the most recent dump.
 * We now have a community projects Slack channel, [join us](https://arangodb-community.slack.com/archives/C01MLH491UM)!
 
 Some goals for the project include:
@@ -22,7 +22,36 @@ We would enjoy having anyone from the community participate in the project devel
 If you have any suggestions or features that you would like to be added start a discussion or open an issue.
 
 # Contributing
-## ArangoDB Installation
+
+## Project Setup
+
+Currently, there are a couple ways to get started:
+* [With Docker Compose](#with-docker-compose)
+* [NPM and Self-Installed ArangoDB](#npm-and-self-install)
+
+<h2 id="with-docker-compose">Using Docker Compose</h2>
+
+- First you need to download the most up to date dump of the DB from [here](https://drive.google.com/drive/folders/1crMM2RRpdVgi7gkblAlAZXTvIoNNVYbT?usp=sharing)
+- Extract the content inside the folder database/dumps. Its should looks like
+```
+dumps
+|_ arangobnb.view.json
+|_ arangobnb.view.json:Zone.Identifier
+...
+```
+
+- Run `docker-compose up`. (The first time could take a few minutes, the docker images are beign build and the database dump its beign restored)
+
+- Now you can access the Arango Web Interface in [http://localhost:8529](http://localhost:8529)
+- Vue Frontend [http://localhost:8080](http://localhost:8080)
+- React Frontend [http://localhost:8081](http://localhost:8081)
+- Backend (API) [http://localhost:8001](http://localhost:8001)
+
+
+
+<h2 id="npm-and-self-install">Using NPM and Self-Installed ArangoDB</h2>
+
+### ArangoDB Installation
 
 This project uses features from the upcoming 3.8 version of ArangoDB. To get started you will need the nightly build version of ArangoDB.
 For more information on how to get a nightly build please see the [nighly builds page](https://www.arangodb.com/nightly-builds/).
@@ -33,18 +62,16 @@ For example, if you are using docker:
 docker pull arangodb/arangodb-preview:3.8.0-nightly
 
 docker run -d -e ARANGO_ROOT_PASSWORD="test" -p 8529:8529 arangodb/arangodb-preview:3.8.0-nightly
- 
+
 ```
-
-## Project Setup
-
+### Dependency Management 
 Each frontend maintains its own package.json for dependencies.
 The root package.json handles the installation of packages for whichever package you choose to install.
 Running `npm install` will install both sets of packages for Vue and React.
 
 If you would like to only install the individual packages append the framework name. ie: `npm run install-vue`
 
-## Environment Variables
+#### Environment Variables
 
 This project uses `.env` and `.env.local` for the various environment variables needed, see the [Vue docs](https://cli.vuejs.org/guide/mode-and-env.html#modes) for more info. You will mostly need to pay attention to and update the variables in `.env.local`.
 
@@ -52,11 +79,11 @@ Since `.env.local` will not be included in PR's, this list should be updated whe
 
 Currently, these are the needed variables.
 
-### `.env`
+##### `.env`
 
-* `VUE_APP_API_ENDPOINT`
+`VUE_APP_API_ENDPOINT`
 
-### `.env.local`
+##### `.env.local`
 
 
 
