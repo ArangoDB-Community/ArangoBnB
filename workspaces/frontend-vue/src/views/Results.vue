@@ -1,27 +1,34 @@
 <template>
 <div class="md-layout">
-    <ResultsInfo v-bind:listings=listings />
-    <Map />
+    <ResultsInfo v-show="!listingClicked" v-bind:listings=listings />
+    <Map v-show="!listingClicked"/>
+    <ListingDetails v-if="listingClicked"/>
 </div>
 </template>
 
 <script>
 import ResultsInfo from "../components/ResultsInfo";
 import Map from "../components/Map";
+import ListingDetails from "../components/ListingDetails";
+import { mapState } from 'vuex'
+
 
   export default {
     name: 'Home',
-    components: {
-        ResultsInfo,
-        Map
-    },
-    props: {
-    listings: Array,
-    mapEvent: Array
-    },
     data: () => ({
-
-    })
+    }),
+    components: {
+      ResultsInfo,
+      Map,
+      ListingDetails
+    },
+    computed:
+      mapState({
+        listings: state => state.map.listings,
+        listingClicked: (state) => {
+          return Object.keys(state.map.clickedListing).length > 0 ? true : false
+        }
+      })
   };
 </script>
 

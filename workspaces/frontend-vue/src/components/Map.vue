@@ -11,8 +11,6 @@ import mapMarkerShadow from "../assets/ArangoMapMarker_shadow.png";
 import listingsCard from './listingsCard';
 import Vue from 'vue'
 
-// const mymap = L.map("mapContainer");
-
 export default {
   name: "Map",
   components: {    
@@ -69,6 +67,7 @@ export default {
     addMarkers: function (listings) {
       const iconX = 36;
       const iconY = 36;
+      const t = this;
       const mapIcon = L.Icon.extend({
         options: {
           shadowUrl: mapMarkerShadow,
@@ -90,14 +89,17 @@ export default {
         }
         
         listings.map((listing) => {
+          let className = (listing._key)
           if (!this.markersKeys.includes(listing._key)) {
             this.markersKeys.push(listing._key)
 
             const popup = L.popup({
-            "className": "popupClass",
+            "className": 'popupClass ' + className,
             "maxWidth": 200,
             "maxHeight": 300,
-            "autoPan": true
+            "autoPan": true,
+            "ref": className,
+            "listing": listing
             })
             .setLatLng([listing.latitude, listing.longitude])
             .setContent(new Vue({
@@ -106,12 +108,20 @@ export default {
               propsData: {listing: listing}
             }).$mount().$el.outerHTML);
 
+
             L.marker([listing.latitude, listing.longitude], { icon: arangoIcon })
               .bindPopup(popup)
-              .addTo(this.markerLayer);         
-          }
+              .addTo(this.markerLayer);
+              }
         })
+         this.mymap.on('popupopen', function(e) {
+              const popupListing = e.target._popup.options.listing
+              document.getElementsByClassName(e.popup._source._popup._container.className)[0].addEventListener("click", () => {
+                t.$store.dispatch("map/listingClicked", popupListing)
+              })
+            })
         this.markerLayer.addTo(this.mymap);
+
       },
     setupLeafletMap: function () {
       let mymap = this.mymap

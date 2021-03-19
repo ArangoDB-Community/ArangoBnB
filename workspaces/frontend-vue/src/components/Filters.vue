@@ -114,7 +114,7 @@ clearFilters: function() {
 .md-checkbox {
   display: inline-flex;
 }
-  .priceBar {
+.priceBar {
   width: 80%;
   opacity: 0.7;
   -webkit-transition: .2s;
