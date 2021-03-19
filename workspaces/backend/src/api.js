@@ -41,14 +41,72 @@ ApiRouter.get("/api/results", async (ctx) => {
 })
 
 ApiRouter.post("/api/mapResults", async (ctx) => {
+  try {
+
+    const result = [];
+    const body = ctx.request.body;
+    const [north, east, south, west] = body.mapArea;
+    const poly = [[west, north], [east, north], [east, south], [west, south], [west, north]];
+    const additionalCriteria = []
+    
+    body.roomType ? 
+    (body.roomType.length ? additionalCriteria.push(aql`
+    AND 
+    ANALYZER(${body.roomType} ANY IN listing.room_type, "identity")
+    `) : ``) : ''
+    
+    body.amenities ? 
+    (body.amenities.length ? additionalCriteria.push(aql`
+    AND
+    ANALYZER(${body.amenities} ALL IN listing.amenities, "identity")
+    `) : ``) : ''
+    
+    body.priceRange ? 
+    ( body.priceRange.length ? additionalCriteria.push(aql`
+    AND
+    IN_RANGE(listing.price, ${body.priceRange[0]}, ${body.priceRange[1]}, true, true)
+    `) : ``) : ''
+    
+    
+    const cursor = await ctx.db.query(aql`
+    LET listings = (
+      FOR listing IN arangobnb
+      SEARCH ANALYZER(GEO_CONTAINS(GEO_POLYGON(${poly}), listing.location), "geo")
+      ${aql.join(additionalCriteria)}
+      SORT listing.number_of_reviews DESC, listing.review_scores_rating DESC
+      LIMIT 100
+      RETURN listing
+      )
+      
+      Let amenities = (
+        FOR doc in listings
+        FOR amenity in doc.amenities
+        COLLECT item = amenity with COUNT into c
+        SORT c DESC
+        LIMIT 100
+        RETURN item
+        )
+        
+        RETURN {listings, amenities}
+        `);
+        for await (const c of cursor){
+          result.push(c);
+        }
+        sendResponse(ctx, result);
+      } catch (e) {
+        sendResponse(e.message)
+      }
+      })
+
+ApiRouter.get("/api/filters", async (ctx) => {
   const result = [];
-  const [north, east, south, west] = ctx.request.body.mapArea;
-  const poly = [[west, north], [east, north], [east, south], [west, south], [west, north]];
   const cursor = await ctx.db.query(aql`
-    FOR listing IN arangobnb
-    SEARCH ANALYZER(GEO_CONTAINS(GEO_POLYGON(${poly}), listing.location), "geo")
-    LIMIT 20
-    RETURN listing
+    FOR doc in arangobnb
+      FOR amenity in doc.amenities
+        COLLECT item = amenity with COUNT into c
+        SORT c DESC
+        LIMIT 20
+        RETURN item
     `);
   for await (const c of cursor){
     result.push(c);

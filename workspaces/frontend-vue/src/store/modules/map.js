@@ -7,10 +7,15 @@ const API = process.env.VUE_APP_API_ENDPOINT
 export const state = () => ({
   moveEvents: [],
   //default map area
-  mapArea: [[13.3733650830416,52.513472114606735],[13.380215444865636,52.513472114606735],[13.387065806689671,52.513472114606735],[13.387065806689671,52.51550916176831],[13.387065806689671,52.51754620892988],[13.380215444865636,52.51754620892988],[13.3733650830416,52.51754620892988],[13.3733650830416,52.51550916176831],[13.3733650830416,52.513472114606735]],
+  mapArea: [52.52038609931014, 13.387355804443361, 52.51223805957966, 13.373665809631348],
   listings: [],
   markers:[],
-  mapPosition: {}
+  mapPosition: {},
+  currentAmenities: [],
+  amenities: [],
+  roomType: [],
+  priceRange: [],
+  clearMarkers: false
 });
 
 // getters
@@ -32,8 +37,14 @@ const actions = {
   getResults: async ({commit, state}, payload) => {
     payload ? (
       payload.mapArea ? await commit('setMapArea', payload.mapArea) : console.log('no mapArea')) : console.log('no payload')
+      
 
-    let data = JSON.stringify({"mapArea": state.mapArea});
+    let data = JSON.stringify({
+      mapArea: state.mapArea,
+      amenities: state.amenities,
+      roomType: state.roomType,
+      priceRange: state.priceRange      
+    });
 
     let config = {
       method: 'post',
@@ -45,8 +56,11 @@ const actions = {
     };
     await axios(config)
     .then( (response) => {
-      commit("setResults", { listings: response.data });
+      let data = response.data[0]
+      
+      commit("setResults", data);
       commit("setMarkers");
+      commit("setAmenities", data);
     })
   },
   setDestination: ({commit}, payload) => {
@@ -55,6 +69,13 @@ const actions = {
     } catch (e) {
       console.log(e)
     }
+  },
+  setFilters: async ({commit, dispatch}, payload) => {
+    payload.roomType ? commit("setSelectedRoomTypes", payload) : ''
+    payload.amenities ? commit("setSelectedAmmenities", payload) : ''
+    payload.priceRange ? commit("setSelectedPriceRange", payload) : ''
+    await dispatch("getResults");
+    commit("setClearMarkers", true);
   }
 };
 
@@ -82,6 +103,42 @@ const mutations = {
   setMapPosition(state, position){
     try {
       Vue.set(state, 'mapPosition', position.destination);
+    } catch (e) {
+      console.log(e);
+    }
+  },
+  setAmenities(state, payload) {
+    try {
+      Vue.set(state, 'currentAmenities', payload.amenities);
+    } catch(e) {
+      console.log(e);
+    }
+  },
+  setSelectedRoomTypes(state, payload) {
+    try {
+      Vue.set(state, 'roomType', payload.roomType)
+    } catch(e) {
+      console.log(e)
+    }
+  },
+  setSelectedAmmenities(state, payload) {
+    try {
+      Vue.set(state, 'amenities', payload.amenities)
+    } catch(e) {
+      console.log(e)
+    }
+  },
+  setSelectedPriceRange(state, payload) {
+    try {
+      Vue.set(state, 'priceRange', payload.priceRange)
+    } catch(e) {
+      console.log(e)
+    }
+  },
+  setClearMarkers(state, payload) {
+    console.log(payload)
+    try{
+      Vue.set(state, 'clearMarkers', payload)
     } catch (e) {
       console.log(e)
     }

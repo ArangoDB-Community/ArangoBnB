@@ -1,13 +1,6 @@
 <template>
   <div class="md-layout-item md-scrollbar resultsContainer">
-    <md-button>
-        <strong v-on:click="showHide">
-        {{ showEvents ? "Hide" : "Show" }} log events:
-        </strong>
-      </md-button>
-    <transition name="fade" v-if=showEvents>
-      <pre>{{moveEvents.join('\n')}}</pre>
-    </transition>
+    <Filters class="filtersContainer" />
     <listingsCard class="resultCard" v-for="listing in listings" :key="listing._key" v-bind:listing=listing />
   </div>
 
@@ -16,11 +9,13 @@
 <script>
 import { mapState } from 'vuex'
 import listingsCard from './listingsCard'
+import Filters from './Filters'
 
 export default {
   name: "ResultsInfo",
   components: {
-    listingsCard
+    listingsCard,
+    Filters
   },
   data: () => ({
     showEvents: true,
@@ -69,5 +64,13 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+.filtersContainer {
+  width: 90%;
+  margin-bottom: 8px;
+  margin-top: 8px;
+  display: inline-block;
+  background: whitesmoke;
+  border-radius: 25px;
 }
 </style>

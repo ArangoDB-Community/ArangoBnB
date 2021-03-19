@@ -19,24 +19,40 @@ export default {
   },
   data: () => ({
     showEvents: true,
-    mymap: {}
+    mymap: {},
+    markersKeys: [],
+    markerLayer: L.layerGroup(),
+    maxMarkers: 200
   }),
   computed:
   mapState({
     listings: state => state.map.listings,
     mapPosition: state => state.map.mapPosition,
+    clearMarkers: state => state.map.clearMarkers
   }),
   watch: {
     mapPosition: function() {
       this.mymap.setView([this.mapPosition.y, this.mapPosition.x], 16);
+      },
+    clearMarkers: function() {
+      if(this.clearMarkers == true) {
+        this.updateMarkers();
       }
+    }
   },
   methods: {
+    updateMarkers: function() {
+      this.addMarkers(this.listings)
+      this.$store.commit("map/setClearMarkers", false); 
+    },
     showHide: function () {
       this.showEvents = !this.showEvents;
     },
     logEvent: function (type, text) {
-      this.$store.commit("map/setEvents", { type, text });
+      // Logs move events that the Log Event component relies on
+      // leaving for use in tech component
+      // TODO: Add tech component
+      this.$store.commit("map/setEvents", { type, text }); 
     },
     getCardinalDirectionsFromBounds: function (bounds) {
       return [
@@ -50,7 +66,7 @@ export default {
       let mapArea = this.getCardinalDirectionsFromBounds(e.target.getBounds());
       await this.$store.dispatch("map/getResults", { mapArea });
     },
-    setupLeafletMap: function () {
+    addMarkers: function (listings) {
       const iconX = 36;
       const iconY = 36;
       const mapIcon = L.Icon.extend({
@@ -63,21 +79,19 @@ export default {
           popupAnchor:  [-15, -iconY] , // point from which the popup should open relative to the iconAnchor
         },
       });
-      let mymap = this.mymap // likely even more refactoring possible now with mymap hoisted
-
-      let markersKeys = [];
-
-      function addMarkers(listings) {
         const arangoIcon = new mapIcon({ iconUrl: mapMarker });
 
-        if (markersKeys.length >= 100) {
-          markerLayer.clearLayers(); // Would be nice to only clear "old" markers
-          markersKeys = [];
+        // Check to see if markers need cleared due to either:
+        // Too many on screen or
+        // Filters potentially invalidate the current markers (this.clearMarkers)
+        if (this.markersKeys.length >= this.maxMarkers || this.clearMarkers == true) {
+          this.markerLayer.clearLayers(); 
+          this.markersKeys = [];
         }
         
         listings.map((listing) => {
-          if (!markersKeys.includes(listing._key)) {
-            markersKeys.push(listing._key)
+          if (!this.markersKeys.includes(listing._key)) {
+            this.markersKeys.push(listing._key)
 
             const popup = L.popup({
             "className": "popupClass",
@@ -94,15 +108,17 @@ export default {
 
             L.marker([listing.latitude, listing.longitude], { icon: arangoIcon })
               .bindPopup(popup)
-              .addTo(markerLayer);         
+              .addTo(this.markerLayer);         
           }
         })
-        markerLayer.addTo(mymap);
-      }
+        this.markerLayer.addTo(this.mymap);
+      },
+    setupLeafletMap: function () {
+      let mymap = this.mymap
 
       mymap.on("load", async (e) => {
         await this.getResults(e);
-        addMarkers(this.listings);
+        this.addMarkers(this.listings);
       });
 
       mymap.setView([52.5163120794449, 13.380521317397218], 16); // Brandenburg Gate
@@ -115,8 +131,6 @@ export default {
         useCache: true,
       })
       mymap.addLayer(baseLayer)
-
-      const markerLayer = L.layerGroup();
 
       mymap.on("zoomend", (e) => {
         this.logEvent(e.type, e.target.getZoom());
@@ -138,7 +152,7 @@ export default {
 
       mymap.on("moveend", async (e) => {
         await this.getResults(e);
-        await addMarkers(this.listings);
+        await this.addMarkers(this.listings);
       });
     },
   },
