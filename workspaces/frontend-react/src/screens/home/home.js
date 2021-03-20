@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Button, Card, Columns, Hero } from 'react-bulma-components';
-import * as api from 'services/api';
+import api from 'services/api';
 import logo from 'assets/images/logo.webp';
-import './home.scss';
 import { DatePicker } from './components/date-picker';
 import DestinationPicker from './components/destination-picker';
 import TravelersPicker from './components/travelers-picker';
+import './home.scss';
 
 const Home = () => {
   const [form, setForm] = useState({ destination: '', dateStart: undefined, dateEnd: undefined, travelers: { adults: 1, children: 0 } });

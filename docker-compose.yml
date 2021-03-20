@@ -46,6 +46,7 @@ services:
       - 8081:3000
     volumes:
       - ./workspaces/frontend-react/src:/code/src
+      - ./workspaces/frontend-react/public:/code/public
     command: npm start
   frontend-vue:
     image: arangobnb-frontend-vue

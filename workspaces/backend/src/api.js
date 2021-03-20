@@ -23,6 +23,20 @@ ApiRouter.all('/api/test', async (ctx) => {
   });
 });
 
+ApiRouter.all('/api/neighborhood', async (ctx) => {
+  const { lat, lng } = ctx.query;
+  const cursor = await ctx.db.query(aql`
+    FOR doc in arangobnb
+      SEARCH ANALYZER(GEO_CONTAINS(doc.geometry, ${[parseFloat(lng), parseFloat(lat)]}), "geo")
+      LIMIT 1
+    return doc
+  `);
+
+  const [neighborhood] = await cursor.all();
+
+  ctx.sendResponse(neighborhood);
+});
+
 ApiRouter.get('/api/results', async (ctx) => {
   const cursor = await ctx.db.query(aql`
     FOR results IN arangobnb
