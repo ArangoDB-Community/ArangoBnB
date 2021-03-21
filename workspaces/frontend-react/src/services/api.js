@@ -11,21 +11,11 @@ const search = async ({ destination, date, nights, travelers }) => {
 };
 
 const autocomplete = async ({ term }) => {
-  console.log('Search', term);
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve([
-        {
-          id: 1,
-          name: 'New York, USA',
-        },
-        {
-          id: 2,
-          name: 'Barcelona, Spain',
-        },
-      ]);
-    }, 1000);
+  const { data } = await axios.get(`${config.api.url}/api/neighborhood/search`, {
+    params: { query: term },
   });
+
+  return data;
 };
 
 const searchNeighborhood = async (latLng) => {

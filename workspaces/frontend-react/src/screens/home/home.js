@@ -14,7 +14,7 @@ const Home = () => {
     setForm((state) => {
       return {
         ...state,
-        destination: option.name,
+        destination: option,
       };
     });
   };

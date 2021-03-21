@@ -23,18 +23,38 @@ ApiRouter.all('/api/test', async (ctx) => {
   });
 });
 
-ApiRouter.all('/api/neighborhood', async (ctx) => {
-  const { lat, lng } = ctx.query;
+ApiRouter.all('/api/neighborhood/search', async (ctx) => {
+  const { query } = ctx.query;
   const cursor = await ctx.db.query(aql`
+    LET params = TOKENS(${query}, "text_en")
     FOR doc in arangobnb
-      SEARCH ANALYZER(GEO_CONTAINS(doc.geometry, ${[parseFloat(lng), parseFloat(lat)]}), "geo")
-      LIMIT 1
+      SEARCH ANALYZER(STARTS_WITH(doc.properties.neighborhood, params, LENGTH(params)), "text_en")
+      SORT BM25(doc) desc
+      limit 5
     return doc
   `);
 
-  const [neighborhood] = await cursor.all();
+  ctx.sendResponse(await cursor.all());
+});
 
-  ctx.sendResponse(neighborhood);
+ApiRouter.all('/api/neighborhood', async (ctx) => {
+  const { lat, lng } = ctx.query;
+  const cursor = await ctx.db.query(aql`
+    FOR neighborhood in arangobnb
+      SEARCH ANALYZER(GEO_CONTAINS(neighborhood.geometry, ${[parseFloat(lng), parseFloat(lat)]}), "geo")
+      LIMIT 1
+      let results = FIRST(
+        FOR listing IN arangobnb
+          SEARCH ANALYZER(GEO_CONTAINS(neighborhood.geometry, listing.location), "geo")
+          collect with count into total
+        return total
+      )
+    return MERGE(neighborhood, { results })
+  `);
+
+  const [result] = await cursor.all();
+
+  ctx.sendResponse(result);
 });
 
 ApiRouter.get('/api/results', async (ctx) => {

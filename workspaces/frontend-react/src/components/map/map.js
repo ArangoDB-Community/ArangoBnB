@@ -45,9 +45,9 @@ function Events({ onClick, onDblClick, onMove, onMount }) {
   return null;
 }
 
-const Map = ({ onDblClick, onClick, onMove, onMount, center, children }) => {
+const Map = ({ onDblClick, onClick, onMove, onMount, center, children, zoom = 15 }) => {
   return (
-    <MapContainer className="map" center={center} zoom={13}>
+    <MapContainer className="map" center={center} zoom={zoom}>
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -59,6 +59,7 @@ const Map = ({ onDblClick, onClick, onMove, onMount, center, children }) => {
 };
 
 Map.propTypes = {
+  zoom: PropTypes.number,
   onClick: PropTypes.func,
   onDblClick: PropTypes.func,
   onMove: PropTypes.func,

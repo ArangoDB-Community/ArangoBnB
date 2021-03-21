@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Map from 'components/map';
 import { Marker, GeoJSON } from 'react-leaflet';
@@ -8,22 +8,41 @@ import api from 'services/api';
 import './modal-map.scss';
 
 const ModalMap = ({ show, onClose, onSelect }) => {
-  const [mapCenter, setCenter] = useState([52.517474393230245, 13.38838577270508]);
   const [polygon, setPolygon] = useState();
+  const [marker, setMarker] = useState();
+
+  useEffect(() => {
+    setMarker([52.517474393230245, 13.38838577270508]);
+  }, [show]);
+
+  useEffect(async () => {
+    if (!marker) {
+      return;
+    }
+    const data = await api.searchNeighborhood(marker);
+    setPolygon(data);
+  }, [marker]);
 
   return (
     <Modal className="modal-map" show={show} onClose={onClose}>
       <Modal.Content style={{ width: '90%' }}>
         <Card style={{ position: 'relative' }}>
           <Map
-            center={mapCenter}
-            onMove={async ({ center }) => {
-              setCenter(center);
-              const neighborhood = await api.searchNeighborhood(center);
-              setPolygon(neighborhood);
+            center={[52.517474393230245, 13.38838577270508]}
+            onClick={(evt) => {
+              setMarker([evt.latlng.lat, evt.latlng.lng]);
             }}
+            zoom={14}
           >
-            <Marker position={mapCenter} />
+            <Marker
+              position={marker}
+              draggable
+              eventHandlers={{
+                moveend: async (evt) => {
+                  setMarker([evt.target._latlng.lat, evt.target._latlng.lng]);
+                },
+              }}
+            />
             {polygon && <GeoJSON key={polygon._id} pathOptions={{ color: 'blue' }} data={polygon} />}
           </Map>
           <Button.Group className="map-buttons">
@@ -39,10 +58,12 @@ const ModalMap = ({ show, onClose, onSelect }) => {
                 <>
                   <span>Search in:</span>
                   &nbsp;
-                  <b>{polygon.properties.neighborhood}</b>
+                  <b>
+                    {polygon?.properties?.neighborhood} ({polygon.results})
+                  </b>
                 </>
               ) : (
-                'No neighborhood selected'
+                'No neighborhood found'
               )}
             </Button>
             <Button rounded onClick={onClose}>

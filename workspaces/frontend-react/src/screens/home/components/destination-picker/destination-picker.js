@@ -1,58 +1,73 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Loader } from 'react-bulma-components';
 import api from 'services/api';
 import { Autocomplete } from 'components/autocomplete';
 
 import './destination-picker.scss';
+import useonClickOutside from 'hooks/useOnClickOutside';
 import ModalMap from './components/modal-map';
 
-const DestinationPicker = ({ value, onChange, onSelect }) => {
+const DestinationPicker = ({ onSelect, value }) => {
+  const [textValue, setTextValue] = useState('');
   const [destinations, setDestinations] = useState({
     options: [],
     selected: undefined,
   });
+  const ref = useRef();
   const [showAutocomplete, setShowAutocomplete] = useState(false);
   const [showMap, setShowMap] = useState(false);
+  useonClickOutside(ref, () => {
+    setShowAutocomplete(false);
+  });
 
   useEffect(async () => {
-    if (!value || !showAutocomplete) {
+    if (!textValue || !showAutocomplete) {
       setDestinations({
         options: [],
         selected: undefined,
       });
       return;
     }
-    setDestinations({
-      options: [{ isLoading: true }],
-      selected: undefined,
-    });
-    const options = await api.autocomplete({ term: value });
+    const options = await api.autocomplete({ term: textValue });
     setDestinations({
       options,
       selected: undefined,
     });
-  }, [value, showAutocomplete]);
+  }, [textValue, showAutocomplete]);
+
+  useEffect(() => {
+    if (!value) {
+      return;
+    }
+    setTextValue(`${value.properties.neighborhood}, ${value.properties.neighborhood_group}`);
+  }, [value]);
 
   return (
     <>
-      <div style={{ position: 'relative ' }}>
+      <div ref={ref} style={{ position: 'relative ' }}>
         <Form.Input
-          onFocus={() => {
+          onFocus={(evt) => {
             setShowAutocomplete(true);
-          }}
-          onBlur={() => {
-            setShowAutocomplete(false);
+            evt.target.select();
           }}
           autoComplete="off"
           autoCapitalize="off"
-          onChange={onChange}
-          value={value}
+          onChange={({ target }) => {
+            setTextValue(target.value);
+          }}
+          value={textValue}
           name="destination"
           placeholder="I want to go to"
         />
         {showAutocomplete && (
-          <Autocomplete options={destinations.options} onSelect={onSelect}>
+          <Autocomplete
+            options={destinations.options}
+            onSelect={(neighborhood) => {
+              onSelect(neighborhood);
+              setShowAutocomplete(false);
+            }}
+          >
             {(option) => {
               if (option.isLoading) {
                 return (
@@ -61,7 +76,7 @@ const DestinationPicker = ({ value, onChange, onSelect }) => {
                   </div>
                 );
               }
-              return <div>{option.name}</div>;
+              return <div>{`${option.properties.neighborhood}, ${option.properties.neighborhood_group}`}</div>;
             }}
           </Autocomplete>
         )}
@@ -80,9 +95,7 @@ const DestinationPicker = ({ value, onChange, onSelect }) => {
           setShowMap(false);
         }}
         onSelect={(neighborhood) => {
-          onSelect({
-            name: `${neighborhood.properties.neighborhood}, ${neighborhood.properties.neighborhood_group}`,
-          });
+          onSelect(neighborhood);
           setShowMap(false);
         }}
       />
@@ -92,7 +105,6 @@ const DestinationPicker = ({ value, onChange, onSelect }) => {
 
 DestinationPicker.propTypes = {
   value: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
 };
 
