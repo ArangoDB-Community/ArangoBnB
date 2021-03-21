@@ -76,7 +76,11 @@ const DestinationPicker = ({ onSelect, value }) => {
                   </div>
                 );
               }
-              return <div>{`${option.properties.neighborhood}, ${option.properties.neighborhood_group}`}</div>;
+              return (
+                <div>
+                  {`${option.properties.neighborhood}, ${option.properties.neighborhood_group}`} <b>({option.results})</b>
+                </div>
+              );
             }}
           </Autocomplete>
         )}

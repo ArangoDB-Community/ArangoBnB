@@ -31,7 +31,13 @@ ApiRouter.all('/api/neighborhood/search', async (ctx) => {
       SEARCH ANALYZER(STARTS_WITH(doc.properties.neighborhood, params, LENGTH(params)), "text_en")
       SORT BM25(doc) desc
       limit 5
-    return doc
+      let results = FIRST(
+        FOR listing IN arangobnb
+          SEARCH ANALYZER(GEO_CONTAINS(doc.geometry, listing.location), "geo")
+          collect with count into total
+        return total
+      )
+      return MERGE(doc, { results })
   `);
 
   ctx.sendResponse(await cursor.all());
