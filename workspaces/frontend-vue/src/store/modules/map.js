@@ -15,7 +15,8 @@ export const state = () => ({
   amenities: [],
   roomType: [],
   priceRange: [],
-  clearMarkers: false
+  clearMarkers: false,
+  clickedListing: {}
 });
 
 // getters
@@ -76,6 +77,10 @@ const actions = {
     payload.priceRange ? commit("setSelectedPriceRange", payload) : ''
     await dispatch("getResults");
     commit("setClearMarkers", true);
+  },
+  listingClicked: ({commit}, payload) => {
+    commit("setClickedListing", payload)
+
   }
 };
 
@@ -136,13 +141,19 @@ const mutations = {
     }
   },
   setClearMarkers(state, payload) {
-    console.log(payload)
     try{
       Vue.set(state, 'clearMarkers', payload)
     } catch (e) {
       console.log(e)
     }
-  }
+  },
+  setClickedListing(state, payload) {
+    try {
+      Vue.set(state, 'clickedListing', payload);
+    } catch(e) {
+      console.log(e)
+    }
+  },
 };
 
 

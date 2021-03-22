@@ -1,7 +1,9 @@
 <template>
-    <md-card md-with-hover>
+<div :class=listing._key ref='clickHook' >
+
+    <md-card class="cardContainer" md-with-hover>
       <md-card-area>
-        <div>
+        <div v-on:click="listingClicked">
         <md-card-media>
           <img :src="listing.picture_url" alt="listing_image" />
         </md-card-media>
@@ -36,12 +38,18 @@
       </md-card-area>
 
     </md-card>
+</div>
 </template>
 
 <script>
 export default {
     props: {
         listing: Object
+    },
+    methods: {
+      listingClicked: function() {
+        this.$store.dispatch("map/listingClicked", this.listing)
+      }
     }
 }
 </script>
@@ -66,6 +74,10 @@ th, td {
 .amenitiesList {
   font-weight: normal;
 }
+.cardContainer, .md-card-media img{
+  border-radius: 10px;
+}
+
 @media only screen and (max-height: 750px) {
 .priceBtn {
   width: 10%;

@@ -47,6 +47,7 @@ export default {
       setDestination: function(destination) {
         this.query = '';
         this.showAutoComplete = false;
+        this.$store.dispatch("map/listingClicked", {});
         this.$store.dispatch("map/setDestination", { destination });        
       }
     }
