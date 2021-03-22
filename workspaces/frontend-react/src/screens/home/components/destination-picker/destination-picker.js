@@ -1,72 +1,114 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Loader } from 'react-bulma-components';
-import * as api from 'services/api';
+import api from 'services/api';
 import { Autocomplete } from 'components/autocomplete';
 
-const DestinationPicker = ({ value, onChange, onSelect }) => {
+import './destination-picker.scss';
+import useonClickOutside from 'hooks/useOnClickOutside';
+import ModalMap from './components/modal-map';
+
+const DestinationPicker = ({ onSelect, value }) => {
+  const [textValue, setTextValue] = useState('');
   const [destinations, setDestinations] = useState({
     options: [],
     selected: undefined,
   });
+  const ref = useRef();
   const [showAutocomplete, setShowAutocomplete] = useState(false);
+  const [showMap, setShowMap] = useState(false);
+  useonClickOutside(ref, () => {
+    setShowAutocomplete(false);
+  });
 
   useEffect(async () => {
-    if (!value || !showAutocomplete) {
+    if (!textValue || !showAutocomplete) {
       setDestinations({
         options: [],
         selected: undefined,
       });
       return;
     }
-    setDestinations({
-      options: [{ isLoading: true }],
-      selected: undefined,
-    });
-    const options = await api.autocomplete({ term: value });
+    const options = await api.autocomplete({ term: textValue });
     setDestinations({
       options,
       selected: undefined,
     });
-  }, [value, showAutocomplete]);
+  }, [textValue, showAutocomplete]);
+
+  useEffect(() => {
+    if (!value) {
+      return;
+    }
+    setTextValue(`${value.properties.neighborhood}, ${value.properties.neighborhood_group}`);
+  }, [value]);
 
   return (
-    <div style={{ position: 'relative ' }}>
-      <Form.Input
-        onFocus={() => {
-          setShowAutocomplete(true);
-        }}
-        onBlur={() => {
-          setShowAutocomplete(false);
-        }}
-        autoComplete="off"
-        autoCapitalize="off"
-        onChange={onChange}
-        value={value}
-        name="destination"
-        placeholder="I want to go to"
-      />
-      {showAutocomplete && (
-        <Autocomplete options={destinations.options} onSelect={onSelect}>
-          {(option) => {
-            if (option.isLoading) {
+    <>
+      <div ref={ref} style={{ position: 'relative ' }}>
+        <Form.Input
+          onFocus={(evt) => {
+            setShowAutocomplete(true);
+            evt.target.select();
+          }}
+          autoComplete="off"
+          autoCapitalize="off"
+          onChange={({ target }) => {
+            setTextValue(target.value);
+          }}
+          value={textValue}
+          name="destination"
+          placeholder="I want to go to"
+        />
+        {showAutocomplete && (
+          <Autocomplete
+            options={destinations.options}
+            onSelect={(neighborhood) => {
+              onSelect(neighborhood);
+              setShowAutocomplete(false);
+            }}
+          >
+            {(option) => {
+              if (option.isLoading) {
+                return (
+                  <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Loader color="primary" />
+                  </div>
+                );
+              }
               return (
-                <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <Loader color="primary" />
+                <div>
+                  {`${option.properties.neighborhood}, ${option.properties.neighborhood_group}`} <b>({option.results})</b>
                 </div>
               );
-            }
-            return <div>{option.name}</div>;
-          }}
-        </Autocomplete>
-      )}
-    </div>
+            }}
+          </Autocomplete>
+        )}
+      </div>
+      <Form.Label
+        onClick={() => {
+          return setShowMap(true);
+        }}
+        textColor="white"
+      >
+        Or select a neighborhood on the map
+      </Form.Label>
+      <ModalMap
+        show={showMap}
+        onClose={() => {
+          setShowMap(false);
+        }}
+        onSelect={(neighborhood) => {
+          onSelect(neighborhood);
+          setShowMap(false);
+        }}
+      />
+    </>
   );
 };
 
 DestinationPicker.propTypes = {
   value: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
   onSelect: PropTypes.func.isRequired,
 };
 

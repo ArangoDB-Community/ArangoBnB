@@ -1,5 +1,5 @@
-import { Database } from "arangojs";
-import { ServerConfig } from "./server_config";
+import { Database } from 'arangojs';
+import { ServerConfig } from './server_config';
 
 function getArangoDbClient() {
   const config = {
@@ -12,7 +12,7 @@ function getArangoDbClient() {
   };
 
   if (ServerConfig.arangodb_encoded_ca) {
-    config.agentOptions = { ca: Buffer.from(ServerConfig.arangodb_encoded_ca, "base64") };
+    config.agentOptions = { ca: Buffer.from(ServerConfig.arangodb_encoded_ca, 'base64') };
   }
 
   return new Database(config);
