@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 import './autocomplete.scss';
 
-const Autocomplete = ({ options = [], children, onSelect }) => {
+const Autocomplete = ({ domRef, options = [], children, onSelect }) => {
   return (
-    <div className="autocomplete">
+    <div ref={domRef} className="autocomplete">
       {options.map((option, i) => {
         return (
           <div
@@ -29,6 +29,7 @@ Autocomplete.propTypes = {
   children: PropTypes.func.isRequired,
   options: PropTypes.array,
   onSelect: PropTypes.func.isRequired,
+  domRef: PropTypes.object,
 };
 
 export default Autocomplete;

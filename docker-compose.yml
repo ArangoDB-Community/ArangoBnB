@@ -27,7 +27,7 @@ services:
     env_file:
       - ./workspaces/backend/.env.local
     ports:
-      - 8001:5000
+      - 5000:5000
     volumes:
       - ./workspaces/backend/src:/code/src
     command: node .bin/watch.js
@@ -41,11 +41,12 @@ services:
         - NODE_ENV=development
     environment:
       - NODE_ENV=development
-      - API_URL=http://localhost:8001
+      - API_URL=http://localhost:5000
     ports:
       - 8081:3000
     volumes:
       - ./workspaces/frontend-react/src:/code/src
+      - ./workspaces/frontend-react/public:/code/public
     command: npm start
   frontend-vue:
     image: arangobnb-frontend-vue
