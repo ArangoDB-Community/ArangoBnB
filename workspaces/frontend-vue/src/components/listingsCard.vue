@@ -1,7 +1,7 @@
 <template>
 <div :class=listing._key ref='clickHook' >
 
-    <md-card md-with-hover>
+    <md-card class="cardContainer" md-with-hover>
       <md-card-area>
         <div v-on:click="listingClicked">
         <md-card-media>
@@ -74,6 +74,10 @@ th, td {
 .amenitiesList {
   font-weight: normal;
 }
+.cardContainer, .md-card-media img{
+  border-radius: 10px;
+}
+
 @media only screen and (max-height: 750px) {
 .priceBtn {
   width: 10%;

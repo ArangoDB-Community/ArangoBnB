@@ -141,7 +141,6 @@ const mutations = {
     }
   },
   setClearMarkers(state, payload) {
-    console.log(payload)
     try{
       Vue.set(state, 'clearMarkers', payload)
     } catch (e) {

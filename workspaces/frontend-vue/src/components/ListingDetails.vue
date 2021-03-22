@@ -1,16 +1,21 @@
 <template>
-  <div class="detailsContainer">
-      <div class="leftPanel">
+  <div class="md-layout md-gutter detailsContainer">
+      <div class="md-layout-item leftPane" >
         <md-button v-on:click="returnToMap">
           <strong>
           Return to the map
           </strong>
         </md-button>
-        <ListingCard class="resultCard" v-bind:listing=clickedListing />
+        <div class="resultCard">
+        <ListingCard v-bind:listing=clickedListing />
+        </div>
       </div>
 
-      <div class="rightPanel">
-      {{clickedListing}}
+      <div class="md-layout-item md-size-70">
+      <md-content class="rightPaneBackground">
+        <div v-for="item, x in clickedListing" :key="x"></div>
+        {{x}}
+        </md-content>
       </div>
   </div>
 </template>
@@ -39,12 +44,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.leftPanel {
-  overflow: hidden;
-  width: 30%;
-  float: left;
-  max-height: 90%;
+.rightPane {
+  padding-right: 20px !important;
 }
+
 .resultCard {
   width: 90%;
   margin-bottom: 8px;
@@ -61,19 +64,12 @@ export default {
   min-height: 25vh;
   max-height: 35vh;
 }
-.rightPanel {
-  width: 65%;
-  float: right;
-  max-height: 90%;
-  overflow: hidden;
-}
+
 .detailsContainer {
   z-index: 0;
   border-radius: 25px;
-  padding: 20px;
-  display: inline-block;
   border-radius: 25px;
-  max-height: 70vh;
+  max-height: 65vh;
   overflow: hidden;
 }
 
