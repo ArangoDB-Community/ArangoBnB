@@ -128,8 +128,6 @@ export default {
 
       mymap.on("load", async (e) => {
         await this.getResults(e);
-        console.log("setting")
-        console.log(this.listings)
         this.addMarkers(this.listings);
       });
 
