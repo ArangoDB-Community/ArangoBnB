@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 export const ServerConfig = {
   server_port: 5000,
   arangodb_url: process.env.DB_URL || 'http://localhost:8529',
