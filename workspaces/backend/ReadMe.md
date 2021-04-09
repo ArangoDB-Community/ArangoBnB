@@ -23,6 +23,9 @@ From the workspace directory(`./workspaces/backend/`)
 
 ### Serve
 
+Note that either the `server_config.js` file or `.env` file in the backend folder must be updated with your ArangoDB depolyment information.
+
+
 From the project root directory:
 
 `npm run serve-backend`
