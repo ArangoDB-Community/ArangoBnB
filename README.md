@@ -71,7 +71,7 @@ docker run -d -e ARANGO_ROOT_PASSWORD="test" -p 8529:8529 arangodb/arangodb-prev
 <h2 id="npm-backend-setup">Backend</h2>
 
 ```
-npm install-backend
+npm run install-backend
 
 npm run serve-backend
 ```
