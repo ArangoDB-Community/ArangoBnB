@@ -79,6 +79,7 @@ You should receive the following message:
 ```
 ArangoBnb API Backend listening on :5000
 ```
+Note that either the `server_config.js` file or `.env` file in the backend folder must be updated with your ArangoDB depolyment information.
 
 ### Dependency Management 
 Each frontend maintains its own package.json for dependencies.
